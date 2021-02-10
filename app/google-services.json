@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "413877726861",
+    "project_id": "protosight-dc993",
+    "storage_bucket": "protosight-dc993.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:413877726861:android:566fe8f09c499d94de7cc4",
+        "android_client_info": {
+          "package_name": "com.example.protosight"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "413877726861-an5mg87tnuh9bd4rbpmt9e2glep5hd47.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBINyiWCB6Nwi8DR8VzkjU7Xtqq4iGp_lk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "413877726861-an5mg87tnuh9bd4rbpmt9e2glep5hd47.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
