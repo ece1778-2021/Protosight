@@ -4,12 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.protosight.models.Creator;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -27,6 +30,12 @@ public class Login extends AppCompatActivity {
         EditText password = (EditText) findViewById(R.id.password);
 
         mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getCurrentUser() != null) {
+            Log.d(TAG, "Curruent Logged in User: " + mAuth.getCurrentUser().getEmail());
+            Intent intent = new Intent(this, CreatorLandingPage.class);
+            startActivity(intent);
+        }
     }
 
     public void signInOnClick(View view){
@@ -41,7 +50,8 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 // Sign in success, update UI with the signed-in user's information
                                 Log.d(TAG, "signInWithEmail:success");
-                                // Jump to profile page
+                                Intent intent = new Intent(Login.this, CreatorLandingPage.class);
+                                startActivity(intent);
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Log.w(TAG, "signInWithEmail:failure", task.getException());

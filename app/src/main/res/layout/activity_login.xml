@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".Login">
 
+    <com.example.protosight.views.DragRectView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dragRect" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="0dp"
@@ -49,7 +54,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@color/blue_primary"
+        android:background="@drawable/logo"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -58,6 +63,7 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
+
         android:layout_height="100dp"
         android:background="@drawable/ic_wave"
         app:layout_constraintEnd_toEndOf="parent"
