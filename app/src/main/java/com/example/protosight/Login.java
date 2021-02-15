@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -27,6 +29,11 @@ public class Login extends AppCompatActivity {
         EditText password = (EditText) findViewById(R.id.password);
 
         mAuth = FirebaseAuth.getInstance();
+
+        if (mAuth.getCurrentUser() != null) {
+            Log.d(TAG, "Curruent Logged in User: " + mAuth.getCurrentUser().getEmail());
+
+        }
     }
 
     public void signInOnClick(View view){

@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     tools:context=".Login">
 
+    <com.example.protosight.DragRectView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/dragRect" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="0dp"
