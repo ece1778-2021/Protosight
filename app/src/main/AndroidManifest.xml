@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Protosight">
-        <activity android:name=".CreatorLandingPage"/>
+        <activity android:name=".CreatorLandingPage" />
         <activity android:name=".SignUp" />
         <activity
             android:name=".Login"
