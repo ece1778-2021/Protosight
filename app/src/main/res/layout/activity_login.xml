@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:fitsSystemWindows="true"
+
     android:layout_height="match_parent"
     tools:context=".Login">
 
@@ -26,6 +26,7 @@
         android:inputType="textEmailAddress"
         android:padding="16dp"
         android:selectAllOnFocus="true"
+        android:textColorHint="@color/blue_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,6 +48,7 @@
 
         android:padding="16dp"
         android:selectAllOnFocus="true"
+        android:textColorHint="@color/blue_primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/email" />
