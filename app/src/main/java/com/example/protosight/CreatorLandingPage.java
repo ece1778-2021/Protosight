@@ -18,9 +18,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
+import com.example.protosight.adapters.HomeViewPagerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,10 +34,12 @@ public class CreatorLandingPage extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private TabLayout tabLayout;
     private String TAG = "CreatorLandingPage";
-    private TextView username;
+    private TextView username, homeGreeting;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +51,30 @@ public class CreatorLandingPage extends AppCompatActivity {
         navigationView = findViewById(R.id.nav_view);
         toolbar = findViewById(R.id.toolbar);
         View headerView = navigationView.getHeaderView(0);
-        username = (TextView) headerView.findViewById(R.id.login_user_name);
+        username = headerView.findViewById(R.id.login_user_name);
+        homeGreeting = findViewById(R.id.home_greeting);
+        tabLayout = findViewById(R.id.project_task_controller);
+        viewPager = findViewById(R.id.home_viewPager);
+
+        PagerAdapter pa = new HomeViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        viewPager.setAdapter(pa);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         setSupportActionBar(toolbar);
 
@@ -58,12 +87,12 @@ public class CreatorLandingPage extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        username.setText((String) documentSnapshot.get("username"));
+                        String name = (String) documentSnapshot.get("username");
+                        username.setText(name);
+                        String homeDisplayName = "Hello, " + name;
+                        homeGreeting.setText(homeDisplayName);
                     }
                 });
-
-
-//        navigationView.setNavigationItemSelectedListener((NavigationView.OnNavigationItemSelectedListener) this);
 
 
     }
@@ -83,12 +112,11 @@ public class CreatorLandingPage extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         return true;
     }
-//
+
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.logout){
-            Log.d(TAG, "logout");
             mAuth.signOut();
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
