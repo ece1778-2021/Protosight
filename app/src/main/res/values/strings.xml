@@ -23,4 +23,8 @@
     <!--Home page Fragment string -->
     <string name="add_task">Add Task</string>
     <string name="add_project">Add Project</string>
+
+
+    <!-- Create Project string -->
+    <string name="enter_name">Enter your project name</string>
 </resources>
