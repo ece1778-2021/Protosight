@@ -19,6 +19,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,8 +37,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class CreateProject extends AppCompatActivity {
@@ -50,8 +55,8 @@ public class CreateProject extends AppCompatActivity {
     private TextView username, homeGreeting;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private ArrayList<Bitmap> images;
-
+    private ArrayList<String> images;
+    private String projectName;
     private int CAMERA_REQUEST_CODE = 100;
 
 
@@ -72,7 +77,7 @@ public class CreateProject extends AppCompatActivity {
 
     public void projectNameSendOnClick(View view){
         EditText editTextProjectName = findViewById(R.id.project_name);
-        String projectName =  editTextProjectName.getText().toString();
+        projectName =  editTextProjectName.getText().toString();
         RelativeLayout relativeLayout = findViewById(R.id.enter_project_name);
         Log.d(TAG, projectName);
         if (projectName.isEmpty()){
@@ -138,9 +143,18 @@ public class CreateProject extends AppCompatActivity {
                 for (int i=0; i < clipData.getItemCount(); i++){
                     Uri imageUri = clipData.getItemAt(i).getUri();
                     try{
+//                        InputStream is = getContentResolver().openInputStream(imageUri);
                         InputStream is = getContentResolver().openInputStream(imageUri);
-                        images.add(BitmapFactory.decodeStream(is));
+                        byte[] buffer = new byte[is.available()];
+                        is.read(buffer);
+                        File f = getPhoto("temp");
+                        OutputStream outStream = new FileOutputStream(f);
+                        outStream.write(buffer);
+                        Log.d(TAG, f.getAbsolutePath());
+                        images.add(f.getAbsolutePath());
                     } catch (FileNotFoundException e){
+                        e.printStackTrace();
+                    } catch (IOException e ){
                         e.printStackTrace();
                     }
                 }
@@ -148,8 +162,20 @@ public class CreateProject extends AppCompatActivity {
                 Uri imageUri = data.getData();
                 try{
                     InputStream is = getContentResolver().openInputStream(imageUri);
-                    images.add(BitmapFactory.decodeStream(is));
+                    byte[] buffer = new byte[is.available()];
+                    is.read(buffer);
+                    File f = getPhoto("temp");
+                    OutputStream outStream = new FileOutputStream(f);
+                    outStream.write(buffer);
+
+
+//                    Log.d(TAG, f.getAbsolutePath());
+
+
+                    images.add(f.getAbsolutePath());
                 } catch (FileNotFoundException e){
+                    e.printStackTrace();
+                } catch (IOException e ){
                     e.printStackTrace();
                 }
             }
@@ -158,12 +184,18 @@ public class CreateProject extends AppCompatActivity {
 
     }
 
+    private File getPhoto(String filename) throws IOException {
+        File storageDirectory = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        return File.createTempFile(filename, ".jpg", storageDirectory);
+    }
+
+
     private void loadUploadedImages(){
         RecyclerView rv = (RecyclerView) findViewById(R.id.upload_images_recyclerview);
         rv.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(CreateProject.this, 2);
         rv.setLayoutManager(layoutManager);
-        CreateProjectImageAdapter ia = new CreateProjectImageAdapter(images, CreateProject.this);
+        CreateProjectImageAdapter ia = new CreateProjectImageAdapter(images, CreateProject.this, projectName);
         rv.setAdapter(ia);
 
     }
