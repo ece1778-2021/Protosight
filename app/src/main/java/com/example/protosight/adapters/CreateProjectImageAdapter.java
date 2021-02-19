@@ -68,7 +68,8 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
                 project.setCurrentImage(images.get(position));
                 Intent i = new Intent(context, HotspotsLinkScreen.class);
                 Bundle b = new Bundle();
-                b.putStringArrayList("images", project.getImages());
+                images.remove(position);
+                b.putStringArrayList("images", images);
                 i.putExtras(b);
 
                 Log.d(TAG, "------" + project.getProjectName());
