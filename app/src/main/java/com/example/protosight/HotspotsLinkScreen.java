@@ -1,23 +1,23 @@
 package com.example.protosight;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Toast;
+
 
 import com.example.protosight.adapters.CreateProjectImageAdapter;
-import com.example.protosight.models.Project;
+import com.example.protosight.adapters.HotspotLinkScreenAdapter;
+import com.example.protosight.views.DragRectView;
+
 
 import java.util.ArrayList;
 
@@ -40,11 +40,24 @@ public class HotspotsLinkScreen extends AppCompatActivity {
         iv.setImageBitmap(BitmapFactory.decodeFile(current));
 
 
+        Log.d(TAG, images.toString());
+
         RecyclerView rv = (RecyclerView) findViewById(R.id.link_gallery);
-        
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(HotspotsLinkScreen.this, LinearLayoutManager.HORIZONTAL, false);
         rv.setLayoutManager(layoutManager);
-        CreateProjectImageAdapter ia = new CreateProjectImageAdapter(images, HotspotsLinkScreen.this, projectName);
+        HotspotLinkScreenAdapter ia = new HotspotLinkScreenAdapter(images, HotspotsLinkScreen.this, projectName);
         rv.setAdapter(ia);
+
+        final DragRectView view = (DragRectView) findViewById(R.id.dragRect);
+        if (view != null) {
+            view.setOnUpCallback(new DragRectView.OnUpCallback() {
+                @Override
+                public void onRectFinished(final Rect rect) {
+                    Toast.makeText(getApplicationContext(), "Rect is (" + rect.left + ", " + rect.top + ", " + rect.right + ", " + rect.bottom + ")",
+                            Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 }

@@ -2,6 +2,7 @@ package com.example.protosight.adapters;
 
 import android.content.Context;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
 
     private ArrayList<String> images;
     private Context context;
-    private String TAG = "CreateProjectImageAdapter";
+    private String TAG = "HotspotLinkScreenAdapter";
     private String projectName;
 
     public HotspotLinkScreenAdapter(ArrayList<String> images, Context context, String projectName) {
@@ -38,6 +39,7 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
+        Log.d(TAG, images.get(position));
         holder.currentImage.setImageBitmap(BitmapFactory.decodeFile(images.get(position)));
         String text = "Image " + position;
         holder.label.setText(text);
@@ -46,7 +48,7 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
 
     @Override
     public int getItemCount() {
-        return 0;
+        return this.images.size();
     }
 
 
