@@ -91,9 +91,6 @@ public class CreateProject extends AppCompatActivity {
             TextView textViewProjectName = findViewById(R.id.creator_project_name);
             textViewProjectName.setText(projectName);
         }
-
-
-
     }
 
 
