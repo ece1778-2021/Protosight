@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.protosight.HotspotsLinkScreen;
 import com.example.protosight.R;
+import com.example.protosight.SelectHotspot;
 import com.example.protosight.models.Project;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
 
                 Project project = new Project(projectName, images);
                 project.setCurrentImage(images.get(position));
-                Intent i = new Intent(context, HotspotsLinkScreen.class);
+                Intent i = new Intent(context, SelectHotspot.class);
                 Bundle b = new Bundle();
                 ArrayList<String> linkImages = (ArrayList<String>) images.clone();
                 linkImages.remove(images.get(position));
@@ -78,7 +79,7 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
 
                 i.putExtra("selectedImage", project.getCurrentImage());
                 i.putExtra("projectName", projectName);
-                Log.d(TAG, "Start Activity");
+
                 context.startActivity(i);
             }
         });

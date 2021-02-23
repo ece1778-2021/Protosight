@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.protosight.R;
+import com.example.protosight.models.HotSpot;
 
 import java.util.ArrayList;
 
@@ -23,12 +24,15 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
     private Context context;
     private String TAG = "HotspotLinkScreenAdapter";
     private String projectName;
+    private HotSpot hotSpot;
 
     public HotspotLinkScreenAdapter(ArrayList<String> images, Context context, String projectName) {
         this.images = images;
         this.context = context;
         this.projectName = projectName;
+
     }
+
 
     @NonNull
     @Override
@@ -43,6 +47,14 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
         holder.currentImage.setImageBitmap(BitmapFactory.decodeFile(images.get(position)));
         String text = "Image " + position;
         holder.label.setText(text);
+
+        holder.currentImage.setOnClickListener( new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Link " );
+            }
+        });
 
     }
 

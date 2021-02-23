@@ -6,4 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".SelectHotspot">
 
+
+    <ImageView
+        android:id="@+id/add_hotspot_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/dragRect">
+
+    </ImageView>
+
+
+    <com.example.protosight.views.DragRectView
+        android:id="@+id/dragRect"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

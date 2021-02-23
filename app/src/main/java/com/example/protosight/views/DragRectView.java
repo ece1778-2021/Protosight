@@ -6,6 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.text.TextPaint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -73,6 +74,10 @@ public class DragRectView extends View {
                 mDrawRect = false;
                 mStartX = (int) event.getX();
                 mStartY = (int) event.getY();
+                int rStartX = (int) event.getRawX();
+                int rStartY = (int) event.getRawY();
+                Log.d("DragRectView", "" + mStartX + "," + mStartY);
+                Log.d("DragRectView", "" + rStartX + "," + rStartY);
                 invalidate();
                 break;
 
