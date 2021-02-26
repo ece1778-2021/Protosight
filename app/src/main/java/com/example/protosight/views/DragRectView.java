@@ -74,10 +74,7 @@ public class DragRectView extends View {
                 mDrawRect = false;
                 mStartX = (int) event.getX();
                 mStartY = (int) event.getY();
-                int rStartX = (int) event.getRawX();
-                int rStartY = (int) event.getRawY();
-                Log.d("DragRectView", "" + mStartX + "," + mStartY);
-                Log.d("DragRectView", "" + rStartX + "," + rStartY);
+
                 invalidate();
                 break;
 
