@@ -89,6 +89,6 @@ public class ClickableAreasImage implements PhotoViewAttacher.OnViewTapListener{
             listener.onClickableAreaTouched(ca.getItem());
         }
     }
-
+    
 
 }

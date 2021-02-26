@@ -8,10 +8,9 @@
 
     tools:context=".SelectHotspot">
 
-
     <ImageView
         android:id="@+id/add_hotspot_image"
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.protosight.adapters.HotspotLinkScreenAdapter;
 import com.example.protosight.models.HotSpot;
+import com.example.protosight.views.DisplayRectView;
 import com.example.protosight.views.DragRectView;
 
 
@@ -52,8 +53,16 @@ public class HotspotsLinkScreen extends AppCompatActivity {
         String projectName = intent.getStringExtra("projectName");
         String current = intent.getExtras().getString("selectedImage");
 
+        HotSpot hotSpot = intent.getParcelableExtra("hotspot");
+        Log.d(TAG, hotSpot.toString());
+
+
         ImageView iv = findViewById(R.id.selected_image);
         iv.setImageBitmap(BitmapFactory.decodeFile(current));
+//        DisplayRectView displayRectView = findViewById(R.id.hotspot_section);
+//        displayRectView.setMinimumHeight(hotSpot.getH());
+//        displayRectView.setMinimumWidth(hotSpot.getW());
+//        displayRectView.setPadding(hotSpot.getX(), hotSpot.getY(),0,0);
 
 
 
@@ -72,10 +81,6 @@ public class HotspotsLinkScreen extends AppCompatActivity {
 
 
         Log.d(TAG, current);
-
-
-
-
 
 
     }

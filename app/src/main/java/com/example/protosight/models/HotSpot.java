@@ -1,6 +1,9 @@
 package com.example.protosight.models;
 
-public class HotSpot {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class HotSpot implements Parcelable {
 
     private int x;
     private int y;
@@ -15,6 +18,26 @@ public class HotSpot {
         this.h = h;
         this.relatedImage = relatedImage;
     }
+
+    protected HotSpot(Parcel in) {
+        x = in.readInt();
+        y = in.readInt();
+        w = in.readInt();
+        h = in.readInt();
+        relatedImage = in.readString();
+    }
+
+    public static final Creator<HotSpot> CREATOR = new Creator<HotSpot>() {
+        @Override
+        public HotSpot createFromParcel(Parcel in) {
+            return new HotSpot(in);
+        }
+
+        @Override
+        public HotSpot[] newArray(int size) {
+            return new HotSpot[size];
+        }
+    };
 
     public int getX() {
         return x;
@@ -63,5 +86,19 @@ public class HotSpot {
                 "," + y +
                 ") w=" + w +
                 ", h=" + h;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(x);
+        dest.writeInt(y);
+        dest.writeInt(w);
+        dest.writeInt(h);
+        dest.writeString(relatedImage);
     }
 }
