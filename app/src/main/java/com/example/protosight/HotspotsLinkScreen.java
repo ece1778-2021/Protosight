@@ -4,19 +4,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -42,6 +50,7 @@ public class HotspotsLinkScreen extends AppCompatActivity {
     private List<ClickableArea> clickableAreas;
     private DragRectView view;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +67,14 @@ public class HotspotsLinkScreen extends AppCompatActivity {
 
 
         ImageView iv = findViewById(R.id.selected_image);
-        iv.setImageBitmap(BitmapFactory.decodeFile(current));
+//        Bitmap myBitmap = BitmapFactory.decodeFile(current);
+//        iv.setImageBitmap(myBitmap);
+
+
+
+
+        Bitmap tempBitmap = BitmapFactory.decodeByteArray(intent.getExtras().getByteArray("bitmapp"),0, intent.getExtras().getByteArray("bitmapp").length);
+        iv.setImageBitmap(tempBitmap);
 //        DisplayRectView displayRectView = findViewById(R.id.hotspot_section);
 //        displayRectView.setMinimumHeight(hotSpot.getH());
 //        displayRectView.setMinimumWidth(hotSpot.getW());
@@ -82,7 +98,6 @@ public class HotspotsLinkScreen extends AppCompatActivity {
 
         Log.d(TAG, current);
 
-
     }
 
 
@@ -101,6 +116,5 @@ public class HotspotsLinkScreen extends AppCompatActivity {
         }
         return true;
     }
-
 
 }

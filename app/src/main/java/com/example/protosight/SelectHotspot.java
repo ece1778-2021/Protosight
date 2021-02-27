@@ -2,11 +2,14 @@ package com.example.protosight;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.ContextCompat;
 
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -18,6 +21,7 @@ import android.widget.Toast;
 import com.example.protosight.models.HotSpot;
 import com.example.protosight.views.DragRectView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 
@@ -50,8 +54,8 @@ public class SelectHotspot extends AppCompatActivity {
                 @Override
                 public void onRectFinished(final Rect rect) {
 
-                    int x = (int) (rect.left );
-                    int y = (int) (rect.top );
+                    int x = (int) (rect.left) -(iv.getWidth()-iv.getDrawable().getBounds().right)/2;
+                    int y = (int) (rect.top) -(iv.getHeight()-iv.getDrawable().getBounds().bottom)/2;
                     int w = (int) (rect.width());
                     int h = (int) (rect.height());
 
@@ -66,15 +70,30 @@ public class SelectHotspot extends AppCompatActivity {
                             Toast.LENGTH_LONG).show();
                     view.setVisibility(View.INVISIBLE);
 
+
+
                     Intent i = new Intent(SelectHotspot.this, HotspotsLinkScreen.class);
                     Bundle b = new Bundle();
 
                     b.putStringArrayList("images", images);
                     i.putExtras(b);
-
                     i.putExtra("selectedImage", current);
                     i.putExtra("projectName", projectName);
                     i.putExtra("hotspot", hotspot);
+
+                    Paint mRectPaint = new Paint();
+                    mRectPaint.setColor(ContextCompat.getColor(SelectHotspot.this, R.color.white));
+                    mRectPaint.setStyle(Paint.Style.STROKE);
+                    mRectPaint.setStrokeWidth(5);
+                    Bitmap theBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+                    Canvas canvas = new Canvas(theBitmap);
+                    canvas.drawRect(x,y,w+x,y+h, mRectPaint);
+                    Bitmap bb = theBitmap.copy(Bitmap.Config.ARGB_8888, false);
+                    iv.setImageBitmap(bb);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bb.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+                    byte[] byteArray = baos.toByteArray();
+                    i.putExtra("bitmapp", byteArray);
 
                     startActivity(i);
 
