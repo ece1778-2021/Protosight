@@ -44,20 +44,20 @@
             <ImageView
                 android:id="@+id/selected_image"
                 android:layout_width="match_parent"
-                android:layout_height="320dp"
+                android:layout_height="match_parent"
                 android:background="#2d2d2d"
                 >
 
             </ImageView>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/linkscreen_image_name"
-                android:gravity="center"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:id="@+id/linkscreen_image_name"-->
+<!--                android:gravity="center"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"/>-->
 
 
     </LinearLayout>

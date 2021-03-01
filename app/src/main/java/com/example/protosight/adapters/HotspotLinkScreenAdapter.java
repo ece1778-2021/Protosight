@@ -66,7 +66,7 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
         holder.currentImage.setImageBitmap(BitmapFactory.decodeFile(images.get(position)));
 //        String text = "Image " + position;
 //        holder.label.setText(text);
-        holder.label.setText(imageNames.get(position));
+
         holder.currentImage.setOnClickListener( new View.OnClickListener(){
 
             @Override
@@ -112,7 +112,7 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             currentImage = itemView.findViewById(R.id.single_upload_image);
-            label = itemView.findViewById(R.id.single_upload_image_label);
+
 //            linearLayout = itemView.findViewById(R.id.add_project);
 
         }

@@ -58,17 +58,12 @@ public class HotspotsLinkScreen extends AppCompatActivity {
         selectedHotspot = intent.getParcelableExtra("hotspot");
         Log.d(TAG, selectedHotspot.toString());
 
-        restImageNames = intent.getStringArrayListExtra("restImageName");
-        String currentImageName = intent.getStringExtra("currentImageName");
 
-        Log.d(TAG, currentImageName + "," + restImageNames.toString());
 
         ImageView iv = findViewById(R.id.selected_image);
         Bitmap tempBitmap = BitmapFactory.decodeByteArray(intent.getExtras().getByteArray("bitmapp"),0, intent.getExtras().getByteArray("bitmapp").length);
         iv.setImageBitmap(tempBitmap);
 
-        TextView textView = findViewById(R.id.linkscreen_image_name);
-        textView.setText(currentImageName);
 
 
         toolbar = findViewById(R.id.toolbar);

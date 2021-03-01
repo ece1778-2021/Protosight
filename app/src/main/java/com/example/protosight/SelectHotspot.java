@@ -39,8 +39,6 @@ public class SelectHotspot extends AppCompatActivity {
 
         ArrayList<String> images = intent.getStringArrayListExtra("images");
 
-        ArrayList<String> restImageNames = intent.getStringArrayListExtra("restImageName");
-        String currentImageName = intent.getStringExtra("currentImageName");
 
         String projectName = intent.getStringExtra("projectName");
         String current = intent.getExtras().getString("selectedImage");
@@ -48,7 +46,7 @@ public class SelectHotspot extends AppCompatActivity {
         ImageView iv = findViewById(R.id.add_hotspot_image);
         Bitmap bitmap = BitmapFactory.decodeFile(current);
 
-        Log.d(TAG, currentImageName + "," + restImageNames.toString());
+
 
 
         iv.setImageBitmap(bitmap);
@@ -83,12 +81,12 @@ public class SelectHotspot extends AppCompatActivity {
                     Bundle b = new Bundle();
 
                     b.putStringArrayList("images", images);
-                    b.putStringArrayList("restImageName", restImageNames);
+
                     i.putExtras(b);
                     i.putExtra("selectedImage", current);
                     i.putExtra("projectName", projectName);
                     i.putExtra("hotspot", hotspot);
-                    i.putExtra("currentImageName", currentImageName);
+
 
 
                     int imagex = (int) (rect.left) -(iv.getWidth()-iv.getDrawable().getBounds().right)/2;
@@ -102,7 +100,7 @@ public class SelectHotspot extends AppCompatActivity {
                     Canvas canvas = new Canvas(theBitmap);
                     canvas.drawRect(imagex,imagey,w+imagex,imagey+h, mRectPaint);
                     Bitmap bb = theBitmap.copy(Bitmap.Config.ARGB_8888, false);
-
+                    iv.setImageBitmap(bb);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bb.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     byte[] byteArray = baos.toByteArray();

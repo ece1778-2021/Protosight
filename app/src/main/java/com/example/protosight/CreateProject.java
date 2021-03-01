@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import android.widget.Toast;
 
 
 import com.example.protosight.adapters.CreateProjectImageAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -86,17 +88,20 @@ public class CreateProject extends AppCompatActivity {
         EditText editTextProjectName = findViewById(R.id.project_name);
         projectName =  editTextProjectName.getText().toString();
         RelativeLayout relativeLayout = findViewById(R.id.enter_project_name);
-        Log.d(TAG, projectName);
+
         if (projectName.isEmpty()){
             Toast.makeText(CreateProject.this, "Project name cannot be empty",
                     Toast.LENGTH_SHORT).show();
         } else {
             relativeLayout.setVisibility(View.INVISIBLE);
-            CardView cardView = findViewById(R.id.upload_images_cardview);
-            cardView.setVisibility(View.VISIBLE);
+//            CardView cardView = findViewById(R.id.upload_images_cardview);
+//            cardView.setVisibility(View.VISIBLE);
+//
+//            TextView textViewProjectName = findViewById(R.id.creator_project_name);
+//            textViewProjectName.setText(projectName);
 
-            TextView textViewProjectName = findViewById(R.id.creator_project_name);
-            textViewProjectName.setText(projectName);
+            FloatingActionButton button = findViewById(R.id.add_prototype_images);
+            button.setVisibility(View.VISIBLE);
         }
     }
 
