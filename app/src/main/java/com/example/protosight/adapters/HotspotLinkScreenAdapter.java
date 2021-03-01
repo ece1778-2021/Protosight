@@ -13,24 +13,43 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.protosight.CreateProject;
 import com.example.protosight.R;
 import com.example.protosight.models.HotSpot;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
 public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkScreenAdapter.ImageViewHolder>  {
 
     private ArrayList<String> images;
+    private ArrayList<String> imageNames;
     private Context context;
     private String TAG = "HotspotLinkScreenAdapter";
     private String projectName;
+    private static ArrayList<HotSpot> hotSpots = new ArrayList<>();
     private HotSpot hotSpot;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
-    public HotspotLinkScreenAdapter(ArrayList<String> images, Context context, String projectName) {
+
+    public HotspotLinkScreenAdapter(ArrayList<String> images,
+                                    Context context,
+                                    String projectName,
+                                    ArrayList<String> imageNames,
+                                    HotSpot hotSpot) {
         this.images = images;
         this.context = context;
         this.projectName = projectName;
-
+        this.imageNames = imageNames;
+        this.hotSpot = hotSpot;
+        mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
 
@@ -43,17 +62,37 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
 
     @Override
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
-        Log.d(TAG, images.get(position));
-        holder.currentImage.setImageBitmap(BitmapFactory.decodeFile(images.get(position)));
-        String text = "Image " + position;
-        holder.label.setText(text);
 
+        holder.currentImage.setImageBitmap(BitmapFactory.decodeFile(images.get(position)));
+//        String text = "Image " + position;
+//        holder.label.setText(text);
+        holder.label.setText(imageNames.get(position));
         holder.currentImage.setOnClickListener( new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "Link " );
+                Log.d(TAG, "Link ");
+                hotSpot.setLinkImage(images.get(position));
+                if (hotSpots.isEmpty()) hotSpot.setFirst(true);
+                DocumentReference docRef = db.collection("creators").document(mAuth.getCurrentUser().getUid());
+                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot dc = task.getResult();
+                            if (dc.exists()) {
+
+                                hotSpot.setCreator(dc.get("username").toString());
+                                hotSpot.setProjectID(CreateProject.generateUUID());
+                                Log.d(TAG, hotSpot.toMap().toString());
+                                hotSpots.add(hotSpot);
+                            }
+                        }
+                    }
+
+                });
             }
+
         });
 
     }

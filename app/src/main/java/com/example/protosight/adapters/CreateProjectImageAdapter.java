@@ -33,11 +33,13 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
     private Context context;
     private String TAG = "CreateProjectImageAdapter";
     private String projectName;
+    private ArrayList<String> imageNames;
 
     public CreateProjectImageAdapter(ArrayList<String> images, Context context, String projectName) {
         this.images = images;
         this.context = context;
         this.projectName = projectName;
+        this.imageNames = new ArrayList<>();
     }
 
 
@@ -53,7 +55,7 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
         holder.currentImage.setImageBitmap(BitmapFactory.decodeFile(images.get(position)));
         String text = "Image " + position;
         holder.label.setText(text);
-
+        imageNames.add(text);
         holder.currentImage.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -70,8 +72,14 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
                 Intent i = new Intent(context, SelectHotspot.class);
                 Bundle b = new Bundle();
                 ArrayList<String> linkImages = (ArrayList<String>) images.clone();
+                Log.d(TAG, "1");
+
+                ArrayList<String> imageNamesClone = (ArrayList<String>) imageNames.clone();
+                Log.d(TAG, "2");
                 linkImages.remove(images.get(position));
+                imageNamesClone.remove(imageNames.get(position));
                 b.putStringArrayList("images", linkImages);
+                b.putStringArrayList("restImageName", imageNamesClone);
                 i.putExtras(b);
 
                 Log.d(TAG, "------" + project.getProjectName());
@@ -79,6 +87,8 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
 
                 i.putExtra("selectedImage", project.getCurrentImage());
                 i.putExtra("projectName", projectName);
+                i.putExtra("currentImageName", text);
+
 
                 context.startActivity(i);
             }

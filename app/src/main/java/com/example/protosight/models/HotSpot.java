@@ -3,6 +3,9 @@ package com.example.protosight.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class HotSpot implements Parcelable {
 
     private int x;
@@ -10,6 +13,12 @@ public class HotSpot implements Parcelable {
     private int w;
     private int h;
     private String relatedImage;
+    private String linkImage;
+    private boolean isFirst;
+    private String projectID;
+    private String creator;
+
+
 
     public HotSpot(int x, int y, int w, int h, String relatedImage) {
         this.x = x;
@@ -17,6 +26,10 @@ public class HotSpot implements Parcelable {
         this.w = w;
         this.h = h;
         this.relatedImage = relatedImage;
+        this.linkImage = "";
+        this.isFirst = false;
+        this.projectID = "";
+        this.creator = "";
     }
 
     protected HotSpot(Parcel in) {
@@ -101,4 +114,54 @@ public class HotSpot implements Parcelable {
         dest.writeInt(h);
         dest.writeString(relatedImage);
     }
+
+    public String getLinkImage() {
+        return linkImage;
+    }
+
+    public void setLinkImage(String linkImage) {
+        this.linkImage = linkImage;
+    }
+
+    public boolean isFirst() {
+        return isFirst;
+    }
+
+    public void setFirst(boolean first) {
+        this.isFirst = first;
+    }
+
+    public String getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(String projectID) {
+        this.projectID = projectID;
+    }
+
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public HashMap<String, Object> toMap(){
+        HashMap<String, Object> res = new HashMap<>();
+        res.put("screenshotFrom", getRelatedImage());
+        res.put("screenshotTo", getLinkImage());
+        res.put("isFirst", isFirst());
+        res.put("creator", getCreator());
+        res.put("x", getX());
+        res.put("y", getY());
+        res.put("w", getW());
+        res.put("h", getH());
+        res.put("projectID", getProjectID());
+
+        return res;
+
+
+    }
+
 }

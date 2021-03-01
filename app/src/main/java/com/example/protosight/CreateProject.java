@@ -44,6 +44,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class CreateProject extends AppCompatActivity {
     private ActionBarDrawerToggle toggle;
@@ -55,9 +56,15 @@ public class CreateProject extends AppCompatActivity {
     private TextView username, homeGreeting;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-    private ArrayList<String> images;
-    private String projectName;
+//    private ArrayList<String> images;
+//    private String projectName;
     private int CAMERA_REQUEST_CODE = 100;
+
+    private static String projectName;
+    private static ArrayList<String> images;
+    private static boolean flag;
+    private static String projectID;
+
 
 
     @Override
@@ -71,7 +78,7 @@ public class CreateProject extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         images = new ArrayList<>();
-
+        flag = true;
 
     }
 
@@ -195,6 +202,25 @@ public class CreateProject extends AppCompatActivity {
         CreateProjectImageAdapter ia = new CreateProjectImageAdapter(images, CreateProject.this, projectName);
         rv.setAdapter(ia);
 
+    }
+
+    public static ArrayList<String> getProjectImages(){
+        return images;
+    }
+
+    public static String getProjectName(){
+        return projectName;
+    }
+
+    public static String generateUUID(){
+
+        if (flag){
+            UUID uuid = UUID.randomUUID();
+            projectID = uuid.toString();
+            flag = false;
+        }
+
+        return projectID;
     }
 
 }

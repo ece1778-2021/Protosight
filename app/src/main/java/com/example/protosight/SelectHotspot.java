@@ -37,12 +37,19 @@ public class SelectHotspot extends AppCompatActivity {
         Intent intent = getIntent();
 
 
-        ArrayList<String> images = getIntent().getStringArrayListExtra("images");
+        ArrayList<String> images = intent.getStringArrayListExtra("images");
+
+        ArrayList<String> restImageNames = intent.getStringArrayListExtra("restImageName");
+        String currentImageName = intent.getStringExtra("currentImageName");
+
         String projectName = intent.getStringExtra("projectName");
         String current = intent.getExtras().getString("selectedImage");
 
         ImageView iv = findViewById(R.id.add_hotspot_image);
         Bitmap bitmap = BitmapFactory.decodeFile(current);
+
+        Log.d(TAG, currentImageName + "," + restImageNames.toString());
+
 
         iv.setImageBitmap(bitmap);
 
@@ -54,8 +61,8 @@ public class SelectHotspot extends AppCompatActivity {
                 @Override
                 public void onRectFinished(final Rect rect) {
 
-                    int x = (int) (rect.left) -(iv.getWidth()-iv.getDrawable().getBounds().right)/2;
-                    int y = (int) (rect.top) -(iv.getHeight()-iv.getDrawable().getBounds().bottom)/2;
+                    int x = (int) (rect.left) ;
+                    int y = (int) (rect.top) ;
                     int w = (int) (rect.width());
                     int h = (int) (rect.height());
 
@@ -76,20 +83,26 @@ public class SelectHotspot extends AppCompatActivity {
                     Bundle b = new Bundle();
 
                     b.putStringArrayList("images", images);
+                    b.putStringArrayList("restImageName", restImageNames);
                     i.putExtras(b);
                     i.putExtra("selectedImage", current);
                     i.putExtra("projectName", projectName);
                     i.putExtra("hotspot", hotspot);
+                    i.putExtra("currentImageName", currentImageName);
+
+
+                    int imagex = (int) (rect.left) -(iv.getWidth()-iv.getDrawable().getBounds().right)/2;
+                    int imagey = (int) (rect.top) -(iv.getHeight()-iv.getDrawable().getBounds().bottom)/2;
 
                     Paint mRectPaint = new Paint();
-                    mRectPaint.setColor(ContextCompat.getColor(SelectHotspot.this, R.color.white));
+                    mRectPaint.setColor(getResources().getColor(android.R.color.holo_red_dark));
                     mRectPaint.setStyle(Paint.Style.STROKE);
                     mRectPaint.setStrokeWidth(5);
                     Bitmap theBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
                     Canvas canvas = new Canvas(theBitmap);
-                    canvas.drawRect(x,y,w+x,y+h, mRectPaint);
+                    canvas.drawRect(imagex,imagey,w+imagex,imagey+h, mRectPaint);
                     Bitmap bb = theBitmap.copy(Bitmap.Config.ARGB_8888, false);
-                    iv.setImageBitmap(bb);
+
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bb.compress(Bitmap.CompressFormat.JPEG, 100, baos);
                     byte[] byteArray = baos.toByteArray();

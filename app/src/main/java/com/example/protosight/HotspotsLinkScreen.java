@@ -4,34 +4,26 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.content.res.Resources;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
+
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 
 import com.example.protosight.adapters.HotspotLinkScreenAdapter;
 import com.example.protosight.models.HotSpot;
-import com.example.protosight.views.DisplayRectView;
+
 import com.example.protosight.views.DragRectView;
 
 
@@ -39,9 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import at.lukle.clickableareasimage.ClickableArea;
-import at.lukle.clickableareasimage.ClickableAreasImage;
-import at.lukle.clickableareasimage.OnClickableAreaClickedListener;
-import uk.co.senab.photoview.PhotoViewAttacher;
+
 
 public class HotspotsLinkScreen extends AppCompatActivity {
 
@@ -49,6 +39,10 @@ public class HotspotsLinkScreen extends AppCompatActivity {
     private Toolbar toolbar;
     private List<ClickableArea> clickableAreas;
     private DragRectView view;
+    private static ArrayList<HotSpot> hotSpotsArray;
+    private ArrayList<String> images;
+    private ArrayList<String> restImageNames;
+    private HotSpot selectedHotspot;
 
 
     @Override
@@ -58,45 +52,31 @@ public class HotspotsLinkScreen extends AppCompatActivity {
         Intent intent = getIntent();
 
 
-        ArrayList<String> images = getIntent().getStringArrayListExtra("images");
+        images = intent.getStringArrayListExtra("images");
         String projectName = intent.getStringExtra("projectName");
         String current = intent.getExtras().getString("selectedImage");
+        selectedHotspot = intent.getParcelableExtra("hotspot");
+        Log.d(TAG, selectedHotspot.toString());
 
-        HotSpot hotSpot = intent.getParcelableExtra("hotspot");
-        Log.d(TAG, hotSpot.toString());
+        restImageNames = intent.getStringArrayListExtra("restImageName");
+        String currentImageName = intent.getStringExtra("currentImageName");
 
+        Log.d(TAG, currentImageName + "," + restImageNames.toString());
 
         ImageView iv = findViewById(R.id.selected_image);
-//        Bitmap myBitmap = BitmapFactory.decodeFile(current);
-//        iv.setImageBitmap(myBitmap);
-
-
-
-
         Bitmap tempBitmap = BitmapFactory.decodeByteArray(intent.getExtras().getByteArray("bitmapp"),0, intent.getExtras().getByteArray("bitmapp").length);
         iv.setImageBitmap(tempBitmap);
-//        DisplayRectView displayRectView = findViewById(R.id.hotspot_section);
-//        displayRectView.setMinimumHeight(hotSpot.getH());
-//        displayRectView.setMinimumWidth(hotSpot.getW());
-//        displayRectView.setPadding(hotSpot.getX(), hotSpot.getY(),0,0);
 
-
-
-
-        RecyclerView rv = (RecyclerView) findViewById(R.id.link_gallery);
-
-        rv.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(HotspotsLinkScreen.this, LinearLayoutManager.HORIZONTAL, false);
-        rv.setLayoutManager(layoutManager);
-        HotspotLinkScreenAdapter ia = new HotspotLinkScreenAdapter(images, HotspotsLinkScreen.this, projectName);
-        rv.setAdapter(ia);
+        TextView textView = findViewById(R.id.linkscreen_image_name);
+        textView.setText(currentImageName);
 
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        Log.d(TAG, current);
+        Log.d(TAG, CreateProject.getProjectImages().toString());
+        Log.d(TAG, CreateProject.getProjectName());
 
     }
 
@@ -113,6 +93,15 @@ public class HotspotsLinkScreen extends AppCompatActivity {
         if (id == R.id.link_image){
 
             Log.d(TAG, "clicklcikclci");
+            RecyclerView rv = (RecyclerView) findViewById(R.id.link_gallery);
+            TextView textView = findViewById(R.id.hotspot_linkscreen_textview);
+            textView.setText("Please select link image");
+            textView.setVisibility(View.VISIBLE);
+            rv.setHasFixedSize(true);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(HotspotsLinkScreen.this, LinearLayoutManager.HORIZONTAL, false);
+            rv.setLayoutManager(layoutManager);
+            HotspotLinkScreenAdapter ia = new HotspotLinkScreenAdapter(images, HotspotsLinkScreen.this, CreateProject.getProjectName(), restImageNames, selectedHotspot);
+            rv.setAdapter(ia);
         }
         return true;
     }
