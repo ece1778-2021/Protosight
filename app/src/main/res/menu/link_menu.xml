@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/link_image"
+        android:id="@+id/cancel_link"
         app:showAsAction="always"
-        android:title="Link"
-        android:icon="@drawable/ic_add_link"
+        android:title="Cancel"
+
         />
 </menu>

@@ -14,4 +14,21 @@
         android:title="Confirm"
         android:icon="@drawable/ic_confirm_hotspot"
         />
+
+    <item
+        android:id="@+id/save_hotspot"
+        app:showAsAction="always"
+        android:title="Save"
+
+        />
+
+
+    <item
+        android:id="@+id/nextImage"
+        app:showAsAction="always"
+        android:title="Next"
+
+        />
+
+
 </menu>

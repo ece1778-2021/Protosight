@@ -97,8 +97,9 @@ public class CreateProject extends AppCompatActivity {
 //            CardView cardView = findViewById(R.id.upload_images_cardview);
 //            cardView.setVisibility(View.VISIBLE);
 //
-//            TextView textViewProjectName = findViewById(R.id.creator_project_name);
-//            textViewProjectName.setText(projectName);
+            TextView textViewProjectName = findViewById(R.id.creator_project_name);
+            textViewProjectName.setVisibility(View.VISIBLE);
+            textViewProjectName.setText(projectName);
 
             FloatingActionButton button = findViewById(R.id.add_prototype_images);
             button.setVisibility(View.VISIBLE);

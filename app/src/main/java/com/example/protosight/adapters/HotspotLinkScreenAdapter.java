@@ -41,12 +41,10 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
     public HotspotLinkScreenAdapter(ArrayList<String> images,
                                     Context context,
                                     String projectName,
-                                    ArrayList<String> imageNames,
                                     HotSpot hotSpot) {
         this.images = images;
         this.context = context;
         this.projectName = projectName;
-        this.imageNames = imageNames;
         this.hotSpot = hotSpot;
         mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -64,8 +62,7 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
     public void onBindViewHolder(@NonNull ImageViewHolder holder, int position) {
 
         holder.currentImage.setImageBitmap(BitmapFactory.decodeFile(images.get(position)));
-//        String text = "Image " + position;
-//        holder.label.setText(text);
+
 
         holder.currentImage.setOnClickListener( new View.OnClickListener(){
 

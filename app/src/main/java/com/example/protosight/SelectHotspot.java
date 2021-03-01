@@ -51,6 +51,12 @@ public class SelectHotspot extends AppCompatActivity {
     private ArrayList<String> images;
     private String projectName;
     private String current;
+    private MenuItem itemReset;
+    private MenuItem itemConfirm ;
+    private MenuItem itemNextImage;
+    private MenuItem itemSaveHotspot;
+
+
 
 
     @Override
@@ -60,7 +66,6 @@ public class SelectHotspot extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-
         images = intent.getStringArrayListExtra("images");
 
 
@@ -69,10 +74,10 @@ public class SelectHotspot extends AppCompatActivity {
 
         iv = findViewById(R.id.add_hotspot_image);
         originImage = BitmapFactory.decodeFile(current);
+        toolbar = findViewById(R.id.toolbar);
 
+        setSupportActionBar(toolbar);
 
-//        ListView listView = findViewById(R.id.select_link_image);
-//        listView.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{ "stest", "42"}));
 
 
         Log.d(TAG, "hotspot.toString()");
@@ -106,10 +111,8 @@ public class SelectHotspot extends AppCompatActivity {
                     newImage = theBitmap.copy(Bitmap.Config.ARGB_8888, false);
                     iv.setImageBitmap(newImage);
 
-                    toolbar = findViewById(R.id.toolbar);
-
-                    setSupportActionBar(toolbar);
-
+                    itemNextImage.setVisible(false); itemReset.setVisible(true);
+                    itemConfirm.setVisible(true); itemSaveHotspot.setVisible(false);
 
 
                 }
@@ -121,7 +124,18 @@ public class SelectHotspot extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
+//        toolbar = findViewById(R.id.toolbar);
+//         toolbar.inflateMenu(R.menu.reset_confirm_link);
         getMenuInflater().inflate(R.menu.reset_confirm_link, menu);
+        Log.d(TAG, "creddd....");
+        itemReset = menu.findItem(R.id.reset_hotspot);
+        itemConfirm = menu.findItem(R.id.confirm_hotspot);
+        itemNextImage = menu.findItem(R.id.nextImage);
+        itemSaveHotspot = menu.findItem(R.id.save_hotspot);
+        itemReset.setVisible(false);
+        itemConfirm.setVisible(false);
+
         return true;
     }
 
@@ -132,7 +146,11 @@ public class SelectHotspot extends AppCompatActivity {
             Log.d(TAG, "Reset.....");
             iv.setImageBitmap(originImage);
             view.setVisibility(View.VISIBLE);
-            view.clearFocus();
+            itemReset.setVisible(false);
+            itemConfirm.setVisible(false);
+            itemNextImage.setVisible(true);
+            itemSaveHotspot.setVisible(true);
+
         } else if (id == R.id.confirm_hotspot){
             Log.d(TAG, "Confirm.....");
             Intent i = new Intent(SelectHotspot.this, HotspotsLinkScreen.class);
@@ -153,17 +171,13 @@ public class SelectHotspot extends AppCompatActivity {
             byte[] byteArray = baos.toByteArray();
             i.putExtra("bitmapp", byteArray);
 
-//            startActivity(i);
-            
-            RecyclerView rv = findViewById(R.id.select_link_image);
+            startActivity(i);
+            overridePendingTransition( R.anim.slide_out_up, R.anim.slide_in_up );
 
-            RecyclerView.LayoutManager layoutManager = new GridLayoutManager(SelectHotspot.this, 2);
-            rv.setLayoutManager(layoutManager);
-            CreateProjectImageAdapter ia = new CreateProjectImageAdapter(images, SelectHotspot.this, projectName);
-            rv.setAdapter(ia);
-
-
-
+        } else if (id == R.id.nextImage){
+            Log.d(TAG, "Next.....");
+        } else if (id == R.id.save_hotspot){
+            Log.d(TAG, "Saving.....");
         }
         return true;
     }

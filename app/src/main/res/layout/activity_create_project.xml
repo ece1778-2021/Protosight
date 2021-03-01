@@ -21,63 +21,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <androidx.cardview.widget.CardView-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="130dp"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginTop="8dp"-->
-<!--        android:layout_marginEnd="32dp"-->
-<!--        android:id="@+id/upload_images_cardview"-->
-<!--        app:cardCornerRadius="8dp"-->
-<!--        app:cardElevation="8dp"-->
-<!--        android:visibility="invisible"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintHorizontal_bias="0.571"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar">-->
 
+    <TextView
+        android:id="@+id/creator_project_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="invisible"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
 
-<!--        <TextView-->
-<!--            android:id="@+id/creator_project_name"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:gravity="center"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:textSize="32sp"/>-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/add_project"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="15dp"-->
-<!--            android:layout_gravity="center_vertical|center_horizontal"-->
-<!--            android:clickable="true"-->
-<!--            android:focusable="true"-->
-<!--            android:foreground="?android:attr/selectableItemBackground"-->
-<!--            android:onClick="uploadImagesOnclick"-->
-<!--            android:orientation="horizontal">-->
-
-
-<!--            <ImageView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-
-<!--                android:src="@drawable/ic_image" />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-
-<!--                android:layout_margin="15dp"-->
-<!--                android:text="@string/upload_image"-->
-<!--                android:textSize="24sp"-->
-<!--                android:textStyle="bold" />-->
-
-<!--        </LinearLayout>-->
-
-
-<!--    </androidx.cardview.widget.CardView>-->
-
+        android:textSize="32sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/upload_images_recyclerview"
@@ -91,8 +49,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upload_images_cardview"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/creator_project_name"
+        app:layout_constraintVertical_bias="0.188" />
 
     <RelativeLayout
         android:id="@+id/enter_project_name"

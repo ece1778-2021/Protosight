@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,12 +38,14 @@ public class HotspotsLinkScreen extends AppCompatActivity {
 
     private String TAG = "HotspotsLinkScreen";
     private Toolbar toolbar;
-    private List<ClickableArea> clickableAreas;
     private DragRectView view;
     private static ArrayList<HotSpot> hotSpotsArray;
-    private ArrayList<String> images;
-    private ArrayList<String> restImageNames;
+
     private HotSpot selectedHotspot;
+
+    private ArrayList<String> images;
+    private String projectName;
+    private String current;
 
 
     @Override
@@ -53,16 +56,16 @@ public class HotspotsLinkScreen extends AppCompatActivity {
 
 
         images = intent.getStringArrayListExtra("images");
-        String projectName = intent.getStringExtra("projectName");
-        String current = intent.getExtras().getString("selectedImage");
+        projectName = intent.getStringExtra("projectName");
+        current = intent.getExtras().getString("selectedImage");
         selectedHotspot = intent.getParcelableExtra("hotspot");
         Log.d(TAG, selectedHotspot.toString());
 
-
-
-        ImageView iv = findViewById(R.id.selected_image);
-        Bitmap tempBitmap = BitmapFactory.decodeByteArray(intent.getExtras().getByteArray("bitmapp"),0, intent.getExtras().getByteArray("bitmapp").length);
-        iv.setImageBitmap(tempBitmap);
+//
+//
+//        ImageView iv = findViewById(R.id.selected_image);
+//        Bitmap tempBitmap = BitmapFactory.decodeByteArray(intent.getExtras().getByteArray("bitmapp"),0, intent.getExtras().getByteArray("bitmapp").length);
+//        iv.setImageBitmap(tempBitmap);
 
 
 
@@ -72,6 +75,17 @@ public class HotspotsLinkScreen extends AppCompatActivity {
 
         Log.d(TAG, CreateProject.getProjectImages().toString());
         Log.d(TAG, CreateProject.getProjectName());
+
+        RecyclerView rv = findViewById(R.id.link_gallery);
+
+        rv.setHasFixedSize(true);
+        rv.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(HotspotsLinkScreen.this, 2);
+        rv.setLayoutManager(layoutManager);
+        HotspotLinkScreenAdapter ia = new HotspotLinkScreenAdapter(images, HotspotsLinkScreen.this, CreateProject.getProjectName(), selectedHotspot);
+        rv.setAdapter(ia);
+
+
 
     }
 
@@ -85,18 +99,19 @@ public class HotspotsLinkScreen extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.link_image){
+        if (id == R.id.cancel_link){
+            Intent intent = new Intent(HotspotsLinkScreen.this, SelectHotspot.class);
 
-            Log.d(TAG, "clicklcikclci");
-            RecyclerView rv = (RecyclerView) findViewById(R.id.link_gallery);
-            TextView textView = findViewById(R.id.hotspot_linkscreen_textview);
-            textView.setText("Please select link image");
-            textView.setVisibility(View.VISIBLE);
-            rv.setHasFixedSize(true);
-            LinearLayoutManager layoutManager = new LinearLayoutManager(HotspotsLinkScreen.this, LinearLayoutManager.HORIZONTAL, false);
-            rv.setLayoutManager(layoutManager);
-            HotspotLinkScreenAdapter ia = new HotspotLinkScreenAdapter(images, HotspotsLinkScreen.this, CreateProject.getProjectName(), restImageNames, selectedHotspot);
-            rv.setAdapter(ia);
+            Bundle b = new Bundle();
+
+
+            b.putStringArrayList("images", images);
+
+            intent.putExtras(b);
+            intent.putExtra("selectedImage", current);
+            intent.putExtra("projectName", projectName);
+            startActivity(intent);
+            overridePendingTransition( R.anim.slide_out_up, R.anim.slide_in_up );
         }
         return true;
     }
