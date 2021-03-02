@@ -4,7 +4,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.HashMap;
-import java.util.Map;
+
+import java.util.Objects;
 
 public class HotSpot implements Parcelable {
 
@@ -164,4 +165,24 @@ public class HotSpot implements Parcelable {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HotSpot hotSpot = (HotSpot) o;
+        return x == hotSpot.x &&
+                y == hotSpot.y &&
+                w == hotSpot.w &&
+                h == hotSpot.h &&
+                isFirst == hotSpot.isFirst &&
+                relatedImage.equals(hotSpot.relatedImage) &&
+                linkImage.equals(hotSpot.linkImage) &&
+                projectID.equals(hotSpot.projectID) &&
+                creator.equals(hotSpot.creator);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y, w, h, relatedImage, linkImage, isFirst, projectID, creator);
+    }
 }

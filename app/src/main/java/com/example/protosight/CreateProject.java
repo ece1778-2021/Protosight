@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.cardview.widget.CardView;
+
 import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -32,12 +32,19 @@ import android.widget.Toast;
 
 
 import com.example.protosight.adapters.CreateProjectImageAdapter;
+import com.example.protosight.models.HotSpot;
+import com.example.protosight.models.Project;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.auth.FirebaseAuth;
 
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -58,14 +65,17 @@ public class CreateProject extends AppCompatActivity {
     private TextView username, homeGreeting;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
-//    private ArrayList<String> images;
-//    private String projectName;
+    private FirebaseStorage storage;
+
     private int CAMERA_REQUEST_CODE = 100;
     private MenuItem itemSave;
     private static String projectName;
-    private static ArrayList<String> images = new ArrayList<>();;
+    private static ArrayList<String> images = new ArrayList<>();
     private static boolean flag;
-    private static String projectID;
+    public static String projectID = generateUUID();
+    public static Project project = new Project();
+    private int upload_count = 0;
+    private ProgressDialog progressDialog;
 
 
 
@@ -73,13 +83,14 @@ public class CreateProject extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
-
+        storage = FirebaseStorage.getInstance();
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
 
+        project.setProjectCode(projectID);
         Intent intent = getIntent();
         String next = intent.getStringExtra("next");
         if (next != null){
@@ -87,7 +98,19 @@ public class CreateProject extends AppCompatActivity {
             loadUploadedImages();
         }
 
+        db.collection("creators")
+                .document(mAuth.getCurrentUser().getUid())
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        String creator = (String) documentSnapshot.get("username");
+                        String creatorEmail = (String) documentSnapshot.get("email");
+                        CreateProject.project.setCreator(creator);
+                        CreateProject.project.setCreatorEmail(creatorEmail);
 
+                    }
+                });
 
 
     }
@@ -101,7 +124,9 @@ public class CreateProject extends AppCompatActivity {
             Toast.makeText(CreateProject.this, "Project name cannot be empty",
                     Toast.LENGTH_SHORT).show();
         } else {
+            project.setProjectName(projectName);
             setVisibilityForImage();
+
         }
     }
 
@@ -111,7 +136,7 @@ public class CreateProject extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
         itemSave = menu.findItem(R.id.save_project);
-        itemSave.setVisible(false);
+//        itemSave.setVisible(false);
         return true;
 
     }
@@ -120,7 +145,12 @@ public class CreateProject extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.save_project){
-            Log.d(TAG, "saving project");
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("Saving the prototypes...");
+            progressDialog.show();
+            saveHotspotsToDB();
+            saveProjectToDB();
+            saveImagesToStorage();
         }
         return true;
     }
@@ -189,6 +219,7 @@ public class CreateProject extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+            project.setImages(images);
             loadUploadedImages();
         }
 
@@ -218,15 +249,9 @@ public class CreateProject extends AppCompatActivity {
         return projectName;
     }
 
-    public static String generateUUID(){
-
-        if (flag){
-            UUID uuid = UUID.randomUUID();
-            projectID = uuid.toString();
-            flag = false;
-        }
-
-        return projectID;
+    private static String generateUUID(){
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
     }
 
     private void setVisibilityForImage(){
@@ -239,7 +264,84 @@ public class CreateProject extends AppCompatActivity {
 
         FloatingActionButton button = findViewById(R.id.add_prototype_images);
         button.setVisibility(View.VISIBLE);
-        itemSave.setVisible(true);
+
+    }
+
+    private void saveImagesToStorage(){
+        StorageReference ref;
+
+        for (String path : getProjectImages()){
+            String refPath = "prototypes/"
+                    + mAuth.getCurrentUser().getUid()
+                    + "/" + getProjectName()
+                    + path.substring(path.lastIndexOf("/"), path.length());
+            ref = storage.getReference().child(refPath);
+            Uri file = Uri.fromFile(new File(path));
+            ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Log.d(TAG, path + "  UPLOADED");
+                    upload_count += 1;
+                    if (upload_count == getProjectImages().size()){
+                        CreateProject.images.removeAll(CreateProject.images);
+                        project.clear();
+                        SelectHotspot.clearHotspots();
+                        progressDialog.dismiss();
+                        Intent intent = new Intent(CreateProject.this, CreatorLandingPage.class);
+                        startActivity(intent);
+
+                    }
+                }
+            });
+
+        }
+
+    }
+
+    private void saveProjectToDB(){
+        long ts = System.currentTimeMillis();
+        String firstImageRef = "prototypes/"
+                + mAuth.getCurrentUser().getUid()
+                + "/" + getProjectName()
+                + project.getFirstImageRef().substring(project.getFirstImageRef().lastIndexOf("/"), project.getFirstImageRef().length());
+        project.setFirstImageRef(firstImageRef);
+        project.setTimestamp(ts);
+        db.collection("prototypes").document()
+                .set(project.toMap())
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "project ADD to DB");
+                    }
+                });
+
+    }
+
+    private void saveHotspotsToDB(){
+
+        for (HotSpot hotSpot : SelectHotspot.getHotSpots()){
+            String from = "prototypes/"
+                    + mAuth.getCurrentUser().getUid()
+                    + "/" + getProjectName()
+                    + hotSpot.getRelatedImage().substring(hotSpot.getRelatedImage().lastIndexOf("/"), hotSpot.getRelatedImage().length());
+            String to = "prototypes/"
+                    + mAuth.getCurrentUser().getUid()
+                    + "/" + getProjectName()
+                    + hotSpot.getLinkImage().substring(hotSpot.getLinkImage().lastIndexOf("/"), hotSpot.getLinkImage().length());
+
+            hotSpot.setRelatedImage(from);
+            hotSpot.setLinkImage(to);
+            db.collection("hotspots").document()
+                    .set(hotSpot.toMap())
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.d(TAG, "HOTSPOTS ADD to DB");
+                        }
+                    });
+
+        }
+
     }
 
 }

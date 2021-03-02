@@ -1,13 +1,10 @@
 package com.example.protosight.models;
 
-import android.graphics.Bitmap;
-import android.os.Parcel;
-import android.os.Parcelable;
-
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Objects;
+
 
 public class Project{
 
@@ -17,6 +14,29 @@ public class Project{
     private long timestamp;
 
     private String  currentImage;
+
+    public Project(){
+        this.projectName = "";
+        this.images = new ArrayList<>();
+        this.currentImage = "";
+        this.creator = "";
+        this.creatorEmail = "";
+        this.projectCode = "";
+        this.firstImageRef = "";
+        this.timestamp = 1234567890;
+    }
+
+
+    public Project(String projectName){
+        this.projectName = projectName;
+        this.images = new ArrayList<>();
+        this.currentImage = "";
+        this.creator = "";
+        this.creatorEmail = "";
+        this.projectCode = "";
+        this.firstImageRef = "";
+        this.timestamp = 1234567890;
+    }
 
 
     public Project(String projectName, ArrayList<String > images) {
@@ -107,4 +127,34 @@ public class Project{
         return  res;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return timestamp == project.timestamp &&
+                projectName.equals(project.projectName) &&
+                images.equals(project.images) &&
+                creator.equals(project.creator) &&
+                creatorEmail.equals(project.creatorEmail) &&
+                projectCode.equals(project.projectCode) &&
+                firstImageRef.equals(project.firstImageRef) &&
+                currentImage.equals(project.currentImage);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(projectName, images, creator, creatorEmail, projectCode, firstImageRef, timestamp, currentImage);
+    }
+
+    public void clear(){
+        this.projectName = "";
+        this.images = new ArrayList<>();
+        this.currentImage = "";
+        this.creator = "";
+        this.creatorEmail = "";
+        this.projectCode = "";
+        this.firstImageRef = "";
+        this.timestamp = 1234567890;
+    }
 }

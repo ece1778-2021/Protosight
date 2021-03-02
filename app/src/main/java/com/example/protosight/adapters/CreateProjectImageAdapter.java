@@ -65,8 +65,8 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
 
                 holder.currentImage.startAnimation(animation); //to start animation
 
-                Project project = new Project(projectName, images);
-                project.setCurrentImage(images.get(position));
+//                Project project = new Project(projectName, images);
+//                project.setCurrentImage(images.get(position));
                 Intent i = new Intent(context, SelectHotspot.class);
                 Bundle b = new Bundle();
                 ArrayList<String> linkImages = (ArrayList<String>) images.clone();
@@ -78,7 +78,7 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
 
 
 
-                i.putExtra("selectedImage", project.getCurrentImage());
+                i.putExtra("selectedImage", images.get(position));
                 i.putExtra("projectName", projectName);
 
 

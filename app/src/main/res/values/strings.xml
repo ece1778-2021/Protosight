@@ -27,7 +27,7 @@
 
 
     <!-- Create Project string -->
-    <string name="save_project">Save</string>
+    <string name="save_project">Save Project</string>
     <string name="enter_name">Enter your project name</string>
     <string name="upload_image">Upload Images</string>
     <string name="link_screen">Link Screen</string>

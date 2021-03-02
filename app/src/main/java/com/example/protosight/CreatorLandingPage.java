@@ -95,7 +95,9 @@ public class CreatorLandingPage extends AppCompatActivity implements NavigationV
                     }
                 });
 
-
+        Log.d(TAG, "project --- " + CreateProject.project.toMap().toString());
+        Log.d(TAG, "hotspots --- " + SelectHotspot.getHotSpots().toString());
+        Log.d(TAG, "images --- " + CreateProject.getProjectImages().toString());
     }
 
     @Override

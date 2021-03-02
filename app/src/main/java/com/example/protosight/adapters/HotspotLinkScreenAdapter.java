@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.protosight.CreateProject;
-import com.example.protosight.HotspotsLinkScreen;
+
 import com.example.protosight.R;
 import com.example.protosight.SelectHotspot;
 import com.example.protosight.models.HotSpot;
@@ -81,7 +81,10 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
 
                 holder.currentImage.startAnimation(animation); //to start animation
                 hotSpot.setLinkImage(images.get(position));
-                if (SelectHotspot.getHotSpots().isEmpty()) hotSpot.setFirst(true);
+                if (SelectHotspot.getHotSpots().isEmpty()){
+                    hotSpot.setFirst(true);
+                    CreateProject.project.setFirstImageRef(hotSpot.getRelatedImage());
+                }
                 DocumentReference docRef = db.collection("creators").document(mAuth.getCurrentUser().getUid());
                 docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
@@ -91,7 +94,7 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
                             if (dc.exists()) {
 
                                 hotSpot.setCreator(dc.get("username").toString());
-                                hotSpot.setProjectID(CreateProject.generateUUID());
+                                hotSpot.setProjectID(CreateProject.projectID);
                                 Log.d(TAG, hotSpot.toMap().toString());
                                 SelectHotspot.addHotspot(hotSpot);
 

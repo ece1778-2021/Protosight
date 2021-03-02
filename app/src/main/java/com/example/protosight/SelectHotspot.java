@@ -142,11 +142,11 @@ public class SelectHotspot extends AppCompatActivity {
         Log.d(TAG, "creddd....");
         itemReset = menu.findItem(R.id.reset_hotspot);
         itemConfirm = menu.findItem(R.id.confirm_hotspot);
-//        itemNextImage = menu.findItem(R.id.nextImage);
+
         itemSaveHotspot = menu.findItem(R.id.save_hotspot);
         itemReset.setVisible(false);
         itemConfirm.setVisible(false);
-//        itemNextImage.setVisible(false);
+
 
         return true;
     }
@@ -177,25 +177,12 @@ public class SelectHotspot extends AppCompatActivity {
             i.putExtra("projectName", projectName);
             i.putExtra("hotspot", hotspot);
             displayImage = newImage;
-
-
             startActivity(i);
             overridePendingTransition( R.anim.slide_out_up, R.anim.slide_in_up );
 
-//        } else if (id == R.id.nextImage){
-//
-//            int len = CreateProject.getProjectImages().size();
-//            i = (i+1) % len;
-//            String newPath = CreateProject.getProjectImages().get(i);
-//            Log.d(TAG, "Next....." + newPath);
-//            displayImage = BitmapFactory.decodeFile(newPath);
-//            iv.setImageBitmap(displayImage);
-//
-
         } else if (id == R.id.save_hotspot){
             Log.d(TAG, "Saving....." + getHotSpots().toString());
-//            itemNextImage.setVisible(true);
-//            itemSaveHotspot.setVisible(false);
+
             Intent intent = new Intent(SelectHotspot.this, CreateProject.class);
 
             intent.putExtra("next", "next");
@@ -212,6 +199,10 @@ public class SelectHotspot extends AppCompatActivity {
 
     public static ArrayList<HotSpot> getHotSpots(){
         return hotSpots;
+    }
+
+    public static void clearHotspots(){
+        hotSpots.removeAll(hotSpots);
     }
 
 }
