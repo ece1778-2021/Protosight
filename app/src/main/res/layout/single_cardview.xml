@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
         xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="162dp"
+        android:layout_width="160dp"
         android:layout_height="210dp"
         xmlns:cardview="http://schemas.android.com/apk/res-auto"
-        android:layout_margin="5dp"
+        android:layout_margin="3dp"
         cardview:cardCornerRadius="10dp"
         cardview:cardElevation="10dp"
 
@@ -12,29 +12,23 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
     >
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
 
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:background="#2d2d2d"
             android:id="@+id/single_upload_image"
             />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/single_upload_image_label"
-            android:gravity="center"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
 
 
-    </LinearLayout>
+
+<!--    </LinearLayout>-->
 
 
 

@@ -19,6 +19,7 @@
             android:layout_gravity="center_vertical|center_horizontal"
             android:clickable="true"
             android:orientation="horizontal"
+            android:foreground="?android:attr/selectableItemBackground"
             android:focusable="true">
 
             <ImageView

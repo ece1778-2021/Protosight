@@ -53,6 +53,14 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'com.google.mlkit:image-labeling:17.0.2'
+    implementation 'com.github.Lukle:ClickableAreasImages:v0.1'
+    implementation 'com.sothree.slidinguppanel:library:3.4.0'
 }
 apply plugin: 'com.google.gms.google-services'
+
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
 
