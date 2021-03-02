@@ -3,39 +3,26 @@ package com.example.protosight;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.content.res.Resources;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.drawable.BitmapDrawable;
+
 import android.os.Bundle;
-import android.text.Layout;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.protosight.adapters.CreateProjectImageAdapter;
-import com.example.protosight.adapters.HotspotLinkScreenAdapter;
 import com.example.protosight.models.HotSpot;
 import com.example.protosight.views.DragRectView;
 
-import java.io.ByteArrayOutputStream;
+
 import java.util.ArrayList;
 
 

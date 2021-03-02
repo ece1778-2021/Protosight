@@ -61,7 +61,7 @@ public class CreateProject extends AppCompatActivity {
 //    private ArrayList<String> images;
 //    private String projectName;
     private int CAMERA_REQUEST_CODE = 100;
-
+    private MenuItem itemSave;
     private static String projectName;
     private static ArrayList<String> images = new ArrayList<>();;
     private static boolean flag;
@@ -110,16 +110,17 @@ public class CreateProject extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+        itemSave = menu.findItem(R.id.save_project);
+        itemSave.setVisible(false);
         return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.logout){
-            mAuth.signOut();
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
+        if (id == R.id.save_project){
+            Log.d(TAG, "saving project");
         }
         return true;
     }
@@ -238,6 +239,7 @@ public class CreateProject extends AppCompatActivity {
 
         FloatingActionButton button = findViewById(R.id.add_prototype_images);
         button.setVisibility(View.VISIBLE);
+        itemSave.setVisible(true);
     }
 
 }

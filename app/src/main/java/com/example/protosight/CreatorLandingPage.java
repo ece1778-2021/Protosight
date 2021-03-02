@@ -29,7 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-public class CreatorLandingPage extends AppCompatActivity {
+public class CreatorLandingPage extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     private ActionBarDrawerToggle toggle;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -49,6 +49,7 @@ public class CreatorLandingPage extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
         toolbar = findViewById(R.id.toolbar);
         View headerView = navigationView.getHeaderView(0);
         username = headerView.findViewById(R.id.login_user_name);
@@ -108,21 +109,38 @@ public class CreatorLandingPage extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
-        return true;
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.nav_home){
+            Log.d(TAG, "HOME..");
+        } else if (id == R.id.nav_projects){
+            Log.d(TAG, "Project..");
+        } else if (id == R.id.nav_tests){
+            Log.d(TAG, "TEST..");
+        } else if (id == R.id.logout){
+            Log.d(TAG, "Logout..");
+        }
+
+
+        return false;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.logout){
-            mAuth.signOut();
-            Intent intent = new Intent(this, Login.class);
-            startActivity(intent);
-        }
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.toolbar_menu, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        int id = item.getItemId();
+//        if (id == R.id.logout){
+//            mAuth.signOut();
+//            Intent intent = new Intent(this, Login.class);
+//            startActivity(intent);
+//        }
+//        return true;
+//    }
 
 
 
