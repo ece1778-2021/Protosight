@@ -63,7 +63,7 @@ public class CreateProject extends AppCompatActivity {
     private int CAMERA_REQUEST_CODE = 100;
 
     private static String projectName;
-    private static ArrayList<String> images;
+    private static ArrayList<String> images = new ArrayList<>();;
     private static boolean flag;
     private static String projectID;
 
@@ -79,30 +79,29 @@ public class CreateProject extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
-        images = new ArrayList<>();
-        flag = true;
+
+        Intent intent = getIntent();
+        String next = intent.getStringExtra("next");
+        if (next != null){
+            setVisibilityForImage();
+            loadUploadedImages();
+        }
+
+
+
 
     }
 
     public void projectNameSendOnClick(View view){
         EditText editTextProjectName = findViewById(R.id.project_name);
         projectName =  editTextProjectName.getText().toString();
-        RelativeLayout relativeLayout = findViewById(R.id.enter_project_name);
+
 
         if (projectName.isEmpty()){
             Toast.makeText(CreateProject.this, "Project name cannot be empty",
                     Toast.LENGTH_SHORT).show();
         } else {
-            relativeLayout.setVisibility(View.INVISIBLE);
-//            CardView cardView = findViewById(R.id.upload_images_cardview);
-//            cardView.setVisibility(View.VISIBLE);
-//
-            TextView textViewProjectName = findViewById(R.id.creator_project_name);
-            textViewProjectName.setVisibility(View.VISIBLE);
-            textViewProjectName.setText(projectName);
-
-            FloatingActionButton button = findViewById(R.id.add_prototype_images);
-            button.setVisibility(View.VISIBLE);
+            setVisibilityForImage();
         }
     }
 
@@ -227,6 +226,18 @@ public class CreateProject extends AppCompatActivity {
         }
 
         return projectID;
+    }
+
+    private void setVisibilityForImage(){
+        RelativeLayout relativeLayout = findViewById(R.id.enter_project_name);
+        relativeLayout.setVisibility(View.INVISIBLE);
+
+        TextView textViewProjectName = findViewById(R.id.creator_project_name);
+        textViewProjectName.setVisibility(View.VISIBLE);
+        textViewProjectName.setText(projectName);
+
+        FloatingActionButton button = findViewById(R.id.add_prototype_images);
+        button.setVisibility(View.VISIBLE);
     }
 
 }

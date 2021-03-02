@@ -97,8 +97,8 @@ public class HotSpot implements Parcelable {
         return "HotSpot{" +
                 "(" + x +
                 "," + y +
-                ") w=" + w +
-                ", h=" + h;
+                "," + w +
+                "," + h + ")";
     }
 
     @Override

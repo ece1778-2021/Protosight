@@ -46,15 +46,18 @@ public class SelectHotspot extends AppCompatActivity {
 
     private int x,y,w,h;
     private ImageView iv;
-    private Bitmap originImage;
+
     private Bitmap newImage;
     private ArrayList<String> images;
     private String projectName;
     private String current;
     private MenuItem itemReset;
     private MenuItem itemConfirm ;
-    private MenuItem itemNextImage;
+
     private MenuItem itemSaveHotspot;
+    private static ArrayList<HotSpot> hotSpots = new ArrayList<>();
+    private static Bitmap displayImage;
+    private static int i;
 
 
 
@@ -71,9 +74,17 @@ public class SelectHotspot extends AppCompatActivity {
 
         projectName = intent.getStringExtra("projectName");
         current = intent.getExtras().getString("selectedImage");
+        String isCancel = intent.getStringExtra("cancel");
+
+        i = CreateProject.getProjectImages().indexOf(current);
+
+
 
         iv = findViewById(R.id.add_hotspot_image);
-        originImage = BitmapFactory.decodeFile(current);
+        if (displayImage == null || isCancel != null){
+            displayImage = BitmapFactory.decodeFile(current);
+        }
+
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
@@ -81,7 +92,7 @@ public class SelectHotspot extends AppCompatActivity {
 
 
         Log.d(TAG, "hotspot.toString()");
-        iv.setImageBitmap(originImage);
+        iv.setImageBitmap(displayImage);
 
         view = findViewById(R.id.dragRect);
 
@@ -105,14 +116,17 @@ public class SelectHotspot extends AppCompatActivity {
                     mRectPaint.setColor(getResources().getColor(android.R.color.holo_red_dark));
                     mRectPaint.setStyle(Paint.Style.STROKE);
                     mRectPaint.setStrokeWidth(5);
-                    Bitmap theBitmap = originImage.copy(Bitmap.Config.ARGB_8888, true);
+                    Bitmap theBitmap = displayImage.copy(Bitmap.Config.ARGB_8888, true);
                     Canvas canvas = new Canvas(theBitmap);
                     canvas.drawRect(imagex,imagey,w+imagex,imagey+h, mRectPaint);
                     newImage = theBitmap.copy(Bitmap.Config.ARGB_8888, false);
                     iv.setImageBitmap(newImage);
 
-                    itemNextImage.setVisible(false); itemReset.setVisible(true);
+
+                    itemReset.setVisible(true);
+//                    itemNextImage.setVisible(false);
                     itemConfirm.setVisible(true); itemSaveHotspot.setVisible(false);
+
 
 
                 }
@@ -125,16 +139,15 @@ public class SelectHotspot extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-//        toolbar = findViewById(R.id.toolbar);
-//         toolbar.inflateMenu(R.menu.reset_confirm_link);
         getMenuInflater().inflate(R.menu.reset_confirm_link, menu);
         Log.d(TAG, "creddd....");
         itemReset = menu.findItem(R.id.reset_hotspot);
         itemConfirm = menu.findItem(R.id.confirm_hotspot);
-        itemNextImage = menu.findItem(R.id.nextImage);
+//        itemNextImage = menu.findItem(R.id.nextImage);
         itemSaveHotspot = menu.findItem(R.id.save_hotspot);
         itemReset.setVisible(false);
         itemConfirm.setVisible(false);
+//        itemNextImage.setVisible(false);
 
         return true;
     }
@@ -144,11 +157,11 @@ public class SelectHotspot extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.reset_hotspot){
             Log.d(TAG, "Reset.....");
-            iv.setImageBitmap(originImage);
+            iv.setImageBitmap(displayImage);
             view.setVisibility(View.VISIBLE);
             itemReset.setVisible(false);
             itemConfirm.setVisible(false);
-            itemNextImage.setVisible(true);
+
             itemSaveHotspot.setVisible(true);
 
         } else if (id == R.id.confirm_hotspot){
@@ -164,22 +177,42 @@ public class SelectHotspot extends AppCompatActivity {
             i.putExtra("selectedImage", current);
             i.putExtra("projectName", projectName);
             i.putExtra("hotspot", hotspot);
+            displayImage = newImage;
 
-
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            newImage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-            byte[] byteArray = baos.toByteArray();
-            i.putExtra("bitmapp", byteArray);
 
             startActivity(i);
             overridePendingTransition( R.anim.slide_out_up, R.anim.slide_in_up );
 
-        } else if (id == R.id.nextImage){
-            Log.d(TAG, "Next.....");
+//        } else if (id == R.id.nextImage){
+//
+//            int len = CreateProject.getProjectImages().size();
+//            i = (i+1) % len;
+//            String newPath = CreateProject.getProjectImages().get(i);
+//            Log.d(TAG, "Next....." + newPath);
+//            displayImage = BitmapFactory.decodeFile(newPath);
+//            iv.setImageBitmap(displayImage);
+//
+
         } else if (id == R.id.save_hotspot){
-            Log.d(TAG, "Saving.....");
+            Log.d(TAG, "Saving....." + getHotSpots().toString());
+//            itemNextImage.setVisible(true);
+//            itemSaveHotspot.setVisible(false);
+            Intent intent = new Intent(SelectHotspot.this, CreateProject.class);
+
+            intent.putExtra("next", "next");
+            startActivity(intent);
         }
         return true;
+    }
+
+
+
+    public static void addHotspot(HotSpot hotSpot){
+        hotSpots.add(hotSpot);
+    }
+
+    public static ArrayList<HotSpot> getHotSpots(){
+        return hotSpots;
     }
 
 }

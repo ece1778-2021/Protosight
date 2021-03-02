@@ -82,7 +82,7 @@ public class HotspotsLinkScreen extends AppCompatActivity {
         rv.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(HotspotsLinkScreen.this, 2);
         rv.setLayoutManager(layoutManager);
-        HotspotLinkScreenAdapter ia = new HotspotLinkScreenAdapter(images, HotspotsLinkScreen.this, CreateProject.getProjectName(), selectedHotspot);
+        HotspotLinkScreenAdapter ia = new HotspotLinkScreenAdapter(images, HotspotsLinkScreen.this, selectedHotspot);
         rv.setAdapter(ia);
 
 
@@ -101,15 +101,13 @@ public class HotspotsLinkScreen extends AppCompatActivity {
         int id = item.getItemId();
         if (id == R.id.cancel_link){
             Intent intent = new Intent(HotspotsLinkScreen.this, SelectHotspot.class);
-
             Bundle b = new Bundle();
-
-
             b.putStringArrayList("images", images);
 
             intent.putExtras(b);
             intent.putExtra("selectedImage", current);
             intent.putExtra("projectName", projectName);
+            intent.putExtra("cancel", "cancel");
             startActivity(intent);
             overridePendingTransition( R.anim.slide_out_up, R.anim.slide_in_up );
         }

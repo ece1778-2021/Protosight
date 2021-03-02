@@ -23,12 +23,12 @@
         />
 
 
-    <item
-        android:id="@+id/nextImage"
-        app:showAsAction="always"
-        android:title="Next"
+<!--    <item-->
+<!--        android:id="@+id/nextImage"-->
+<!--        app:showAsAction="always"-->
+<!--        android:title="Next"-->
 
-        />
+<!--        />-->
 
 
 </menu>

@@ -76,7 +76,6 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
 
                 i.putExtras(b);
 
-                Log.d(TAG, "------" + project.getProjectName());
 
 
                 i.putExtra("selectedImage", project.getCurrentImage());
