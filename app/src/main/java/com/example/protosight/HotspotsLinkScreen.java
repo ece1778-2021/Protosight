@@ -107,7 +107,8 @@ public class HotspotsLinkScreen extends AppCompatActivity {
             intent.putExtras(b);
             intent.putExtra("selectedImage", current);
             intent.putExtra("projectName", projectName);
-            intent.putExtra("cancel", "cancel");
+            intent.putExtra("cancelFromHotspotLinkScreen", "cancelFromHotspotLinkScreen");
+
             startActivity(intent);
             overridePendingTransition( R.anim.slide_out_up, R.anim.slide_in_up );
         }

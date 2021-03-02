@@ -102,6 +102,7 @@ public class HotspotLinkScreenAdapter extends RecyclerView.Adapter<HotspotLinkSc
                                 intent.putExtras(b);
                                 intent.putExtra("selectedImage", hotSpot.getRelatedImage());
                                 intent.putExtra("projectName", CreateProject.getProjectName());
+                                intent.putExtra("fromHotspotLinkScreen", "fromHotspotLinkScreen");
                                 context.startActivity(intent);
 
                             }

@@ -47,7 +47,8 @@ public class SelectHotspot extends AppCompatActivity {
     private int x,y,w,h;
     private ImageView iv;
 
-    private Bitmap newImage;
+    private static Bitmap newImage;
+    private static Bitmap preImage;
     private ArrayList<String> images;
     private String projectName;
     private String current;
@@ -74,15 +75,25 @@ public class SelectHotspot extends AppCompatActivity {
 
         projectName = intent.getStringExtra("projectName");
         current = intent.getExtras().getString("selectedImage");
-        String isCancel = intent.getStringExtra("cancel");
+        String isFromHotspotLinkScreen = intent.getStringExtra("fromHotspotLinkScreen");
+        String cancelFromHotspotLinkScreen = intent.getStringExtra("cancelFromHotspotLinkScreen");
 
         i = CreateProject.getProjectImages().indexOf(current);
-
+        Log.d(TAG, i + " - " + current);
 
 
         iv = findViewById(R.id.add_hotspot_image);
-        if (displayImage == null || isCancel != null){
-            displayImage = BitmapFactory.decodeFile(current);
+//        if (displayImage == null){
+//            displayImage = BitmapFactory.decodeFile(current);
+//        } else if (isFromHotspotLinkScreen == null){
+//            displayImage = BitmapFactory.decodeFile(current);
+//        }
+        if (isFromHotspotLinkScreen != null){
+            displayImage = newImage;
+        } else if (cancelFromHotspotLinkScreen != null){
+            displayImage = preImage;
+        } else{
+            displayImage =  BitmapFactory.decodeFile(current);
         }
 
         toolbar = findViewById(R.id.toolbar);
@@ -122,6 +133,7 @@ public class SelectHotspot extends AppCompatActivity {
                     newImage = theBitmap.copy(Bitmap.Config.ARGB_8888, false);
                     iv.setImageBitmap(newImage);
 
+                    preImage = displayImage;
 
                     itemReset.setVisible(true);
 //                    itemNextImage.setVisible(false);
