@@ -28,11 +28,21 @@
     <string name="save_project">Save Project</string>
     <string name="enter_name">Enter your project name</string>
     <string name="upload_image">Upload Images</string>
+
     <string name="link_screen">Link Screen</string>
     <string name="select_image_link_to">Select one screen to link to</string>
 
     <!-- Play Prototype -->
     <string name="paly_proto">Play Prototype</string>
     <string name="stop_proto">Exit</string>
+
+
+    <string name="select_a_prototype_you_would_like_to_test">Select a prototype you would like to test:</string>
+    <string name="the_name_you_enter_below_will_be_displayed_during_user_testing">The name you enter below will be displayed during user testing.</string>
+    <string name="test_name">Test Name</string>
+    <string name="enter_your_test_name">Enter your test name</string>
+    <string name="enter">Enter</string>
+    <string name="test_setup">Test Setup</string>
+    <string name="test_result">Test Result</string>
 
 </resources>
