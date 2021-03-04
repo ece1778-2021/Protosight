@@ -6,40 +6,53 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".tabProjectFragment">
 
-    <androidx.cardview.widget.CardView
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        app:cardCornerRadius="8dp"-->
+<!--        app:cardElevation="8dp">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:id="@+id/add_project"-->
+<!--            android:layout_gravity="center_vertical|center_horizontal"-->
+<!--            android:clickable="true"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:foreground="?android:attr/selectableItemBackground"-->
+<!--            android:focusable="true">-->
+
+<!--            <ImageView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:src="@drawable/add_project" />-->
+
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+
+<!--                android:layout_margin="15dp"-->
+<!--                android:text="@string/add_project"-->
+<!--                android:textSize="24sp"-->
+<!--                android:textStyle="bold" />-->
+
+<!--        </LinearLayout>-->
+
+
+<!--    </androidx.cardview.widget.CardView>-->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="18dp"
+        android:id="@+id/add_project"
+        android:layout_marginBottom="18dp"
+        android:src="@drawable/ic_add"
+        app:backgroundTint="@color/blue_primary" />
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="8dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/add_project"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:clickable="true"
-            android:orientation="horizontal"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:focusable="true">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/add_project" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-
-                android:layout_margin="15dp"
-                android:text="@string/add_project"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-
-    </androidx.cardview.widget.CardView>
-
+        android:id="@+id/project_list"/>
 
 </FrameLayout>

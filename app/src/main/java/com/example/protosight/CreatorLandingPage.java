@@ -120,7 +120,9 @@ public class CreatorLandingPage extends AppCompatActivity implements NavigationV
         } else if (id == R.id.nav_tests){
             Log.d(TAG, "TEST..");
         } else if (id == R.id.logout){
-            Log.d(TAG, "Logout..");
+            mAuth.signOut();
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
         }
 
 
