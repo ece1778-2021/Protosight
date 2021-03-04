@@ -285,6 +285,7 @@ public class CreateProject extends AppCompatActivity {
                     if (upload_count == getProjectImages().size()){
                         CreateProject.images.removeAll(CreateProject.images);
                         project.clear();
+                        projectID = generateUUID();
                         SelectHotspot.clearHotspots();
                         progressDialog.dismiss();
                         Intent intent = new Intent(CreateProject.this, CreatorLandingPage.class);
