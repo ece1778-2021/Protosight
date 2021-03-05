@@ -28,6 +28,7 @@ public class ClickableAreasImage implements PhotoViewAttacher.OnViewTapListener{
 
     public ClickableAreasImage(PhotoViewAttacher attacher, OnClickableAreaClickedListener listener){
         this.attacher = attacher;
+        attacher.setScale((float) 0.5);
         init(listener);
     }
 
@@ -42,9 +43,11 @@ public class ClickableAreasImage implements PhotoViewAttacher.OnViewTapListener{
    
         BitmapDrawable drawable2 = (BitmapDrawable) imageView.getDrawable();
         //After SDK 28 (Android Pie), getBitmap() returns the actual size of the image on the screen
+        Log.d("ClickableAreasImage", drawable2.getBitmap().getWidth() + ","+ drawable2.getBitmap().getHeight());
         if (Build.VERSION.SDK_INT > 27) {
             imageWidthInPx = (int) (drawable2.getBitmap().getWidth());
             imageHeightInPx = (int) (drawable2.getBitmap().getHeight());
+            Log.d("ClickableAreasImage", "sdfasfs");
 
         } else {
             imageWidthInPx = (int) (drawable2.getBitmap().getWidth() / Resources.getSystem().getDisplayMetrics().density);
@@ -55,9 +58,9 @@ public class ClickableAreasImage implements PhotoViewAttacher.OnViewTapListener{
 
 
     private List<ClickableArea> getClickAbleAreas(int x, int y){
+        Log.d("ClickableAreasImage", "CLICK - (" + x + "," + y + ")");
         List<ClickableArea> clickableAreas= new ArrayList<>();
         for(ClickableArea ca : getClickableAreas()){
-            Log.d("HIERF", "" + ca.toString());
             if(isBetween(ca.getX(),(ca.getX()+ca.getW()),x)){
                 if(isBetween(ca.getY(),(ca.getY()+ca.getH()),y)){
                     clickableAreas.add(ca);
@@ -79,16 +82,27 @@ public class ClickableAreasImage implements PhotoViewAttacher.OnViewTapListener{
         return clickableAreas;
     }
 
+//    @Override
+//    public void onPhotoTap(View view, float x, float y) {
+//
+//        int px = (int) x;
+//        int py = (int) y;
+//        Log.d("ClickableAreasImage", "TAP photo - (" + px + "," + py + ")");
+//        List<ClickableArea> clickableAreas = getClickAbleAreas(px, py);
+//        for(ClickableArea ca : clickableAreas){
+//            listener.onClickableAreaTouched(ca.getItem());
+//        }
+//    }
+
+
     @Override
     public void onViewTap(View view, float x, float y) {
-
         int px = (int) x;
         int py = (int) y;
+        Log.d("ClickableAreasImage", "TAP photo - (" + px + "," + py + ")");
         List<ClickableArea> clickableAreas = getClickAbleAreas(px, py);
         for(ClickableArea ca : clickableAreas){
             listener.onClickableAreaTouched(ca.getItem());
         }
     }
-    
-
 }

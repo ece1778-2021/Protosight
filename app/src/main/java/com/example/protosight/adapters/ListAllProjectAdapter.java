@@ -1,6 +1,7 @@
 package com.example.protosight.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,21 +18,25 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.example.protosight.PlayPrototype;
 import com.example.protosight.R;
 
 import java.util.ArrayList;
 
 public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAdapter.ProjectViewHolder>  {
     public ArrayList<String> projects;
+    private ArrayList<String> projectIDs;
+    private ArrayList<String> firstImages;
     private Context context;
     private String TAG = "CreateProjectImageAdapter";
 
 
-    public ListAllProjectAdapter(ArrayList<String> projects, Context context) {
+    public ListAllProjectAdapter(ArrayList<String> projects, Context context, ArrayList<String> projectIDs, ArrayList<String> firstImages) {
 
         this.context = context;
-
+        this.projectIDs = projectIDs;
         this.projects = projects;
+        this.firstImages = firstImages;
     }
 
     @NonNull
@@ -49,7 +54,10 @@ public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAd
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "Play project : " + projects.get(position));
-
+                Intent intent = new Intent(context, PlayPrototype.class);
+                intent.putExtra("projectID", projectIDs.get(position));
+                intent.putExtra("firstImageRef", firstImages.get(position));
+                context.startActivity(intent);
             }
         });
     }
