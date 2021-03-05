@@ -16,12 +16,13 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chauthai.swipereveallayout.SwipeRevealLayout;
 import com.example.protosight.R;
 
 import java.util.ArrayList;
 
 public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAdapter.ProjectViewHolder>  {
-    private ArrayList<String> projects;
+    public ArrayList<String> projects;
     private Context context;
     private String TAG = "CreateProjectImageAdapter";
 
@@ -43,15 +44,22 @@ public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAd
     @Override
     public void onBindViewHolder(@NonNull ListAllProjectAdapter.ProjectViewHolder holder, int position) {
         holder.currentProjectName.setText(this.projects.get(position));
-        holder.currentProjectNameCardView.setOnClickListener(new View.OnClickListener(){
-
+//        holder.currentProjectNameCardView.setOnClickListener(new View.OnClickListener(){
+//
+//            @Override
+//            public void onClick(View v) {
+//                Animation animation = new AlphaAnimation((float) 0.5, 0); //to change visibility from visible to invisible
+//                animation.setDuration(500); //1 second duration for each animation cycle
+//                animation.setInterpolator(new LinearInterpolator());
+//                animation.setRepeatCount(0); //repeating indefinitely
+//                holder.currentProjectNameCardView.setAnimation(animation);
+//
+//            }
+//        });
+        holder.playPrototype.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Animation animation = new AlphaAnimation((float) 0.5, 0); //to change visibility from visible to invisible
-                animation.setDuration(500); //1 second duration for each animation cycle
-                animation.setInterpolator(new LinearInterpolator());
-                animation.setRepeatCount(0); //repeating indefinitely
-                holder.currentProjectNameCardView.setAnimation(animation);
+                Log.d(TAG, "play the fking shit");
 
             }
         });
@@ -64,17 +72,27 @@ public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAd
 
     public static class ProjectViewHolder extends RecyclerView.ViewHolder{
 
-        protected CardView currentProjectNameCardView;
+        protected SwipeRevealLayout currentProjectNameCardView;
         protected TextView currentProjectName;
+        protected TextView playPrototype;
+        private String TAG = "ProjectViewHolder";
 
 
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
             currentProjectName = itemView.findViewById(R.id.single_project_name);
             currentProjectNameCardView = itemView.findViewById(R.id.single_project);
-
+            playPrototype = itemView.findViewById(R.id.play_prototype);
 //            linearLayout = itemView.findViewById(R.id.add_project);
+
+//            playPrototype.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
 
         }
     }
+
 }

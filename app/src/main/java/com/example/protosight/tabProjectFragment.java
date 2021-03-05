@@ -5,7 +5,9 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
@@ -13,7 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.protosight.adapters.CreateProjectImageAdapter;
+
 import com.example.protosight.adapters.ListAllProjectAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -59,7 +61,9 @@ public class tabProjectFragment extends Fragment {
             }
         });
 
+
         RecyclerView rv = view.findViewById(R.id.project_list);
+//        SwipeMenuListView rv = view.findViewById(R.id.project_list);
         db.collection("prototypes")
                 .whereEqualTo("creatorEmail", mAuth.getCurrentUser().getEmail())
                 .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -72,8 +76,10 @@ public class tabProjectFragment extends Fragment {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         projectNames.add(document.getString("name"));
                     }
-                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(view.getContext(), 1);
-                    rv.setLayoutManager(layoutManager);
+//                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(view.getContext(), 1);
+//                    rv.setLayoutManager(layoutManager);
+                    rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                    rv.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
                     ListAllProjectAdapter ia = new ListAllProjectAdapter(projectNames, view.getContext());
                     rv.setAdapter(ia);
                 } else {

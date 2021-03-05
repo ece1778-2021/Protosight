@@ -50,6 +50,14 @@
         android:src="@drawable/ic_add"
         app:backgroundTint="@color/blue_primary" />
 
+<!--    <com.baoyz.swipemenulistview.SwipeMenuListView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:id="@+id/project_list"-->
+<!--        >-->
+
+<!--    </com.baoyz.swipemenulistview.SwipeMenuListView>?-->
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
