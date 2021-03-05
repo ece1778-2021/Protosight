@@ -2,10 +2,12 @@ package com.example.protosight.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
-import android.os.Parcelable;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +20,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.protosight.HotspotsLinkScreen;
+
 import com.example.protosight.R;
 import com.example.protosight.SelectHotspot;
-import com.example.protosight.models.Project;
+
 
 import java.util.ArrayList;
 
@@ -53,6 +58,7 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
     @Override
     public void onBindViewHolder(@NonNull CreateProjectImageAdapter.ImageViewHolder holder, int position) {
         holder.currentImage.setImageBitmap(BitmapFactory.decodeFile(images.get(position)));
+        ImageView iv = holder.itemView.findViewById(R.id.single_upload_image);
 
         holder.currentImage.setOnClickListener(new View.OnClickListener(){
 
@@ -87,6 +93,17 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
             }
         });
 
+        holder.currentImage.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                //your stuff
+                Log.d(TAG, "long...");
+
+                return true;
+            }
+        });
+
     }
 
     @Override
@@ -97,13 +114,13 @@ public class CreateProjectImageAdapter extends RecyclerView.Adapter<CreateProjec
     public static class ImageViewHolder extends RecyclerView.ViewHolder{
 
         protected ImageView currentImage;
-        protected TextView label;
-        protected LinearLayout linearLayout;
+        protected CardView currentCardView;
 
         public ImageViewHolder(@NonNull View itemView) {
             super(itemView);
             currentImage = itemView.findViewById(R.id.single_upload_image);
 
+            currentCardView = itemView.findViewById(R.id.single_cardview);
         }
     }
 }
