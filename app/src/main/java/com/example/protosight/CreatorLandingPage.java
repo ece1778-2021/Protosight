@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
@@ -114,13 +115,22 @@ public class CreatorLandingPage extends AppCompatActivity implements NavigationV
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.nav_home){
-            Log.d(TAG, "HOME..");
+
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_projects){
-            Log.d(TAG, "Project..");
+
+            TabLayout.Tab projectTab = tabLayout.getTabAt(0);
+            tabLayout.selectTab(projectTab);
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_tests){
-            Log.d(TAG, "TEST..");
+            TabLayout.Tab testTab = tabLayout.getTabAt(1);
+            tabLayout.selectTab(testTab);
+            drawerLayout.closeDrawer(GravityCompat.START);
+
         } else if (id == R.id.logout){
-            Log.d(TAG, "Logout..");
+            mAuth.signOut();
+            Intent intent = new Intent(this, Login.class);
+            startActivity(intent);
         }
 
 

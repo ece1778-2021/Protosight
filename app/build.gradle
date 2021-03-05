@@ -55,6 +55,7 @@ dependencies {
     implementation 'com.google.mlkit:image-labeling:17.0.2'
     implementation 'com.github.Lukle:ClickableAreasImages:v0.1'
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
+    implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 }
 apply plugin: 'com.google.gms.google-services'
 

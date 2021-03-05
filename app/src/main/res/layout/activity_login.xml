@@ -57,7 +57,7 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:src="@drawable/logo"
+        android:src="@drawable/ic_logo"
         android:background="@color/blue_primary"
 
         app:layout_constraintEnd_toEndOf="parent"
