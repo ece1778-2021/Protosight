@@ -63,7 +63,7 @@ public class tabProjectFragment extends Fragment {
 
 
         RecyclerView rv = view.findViewById(R.id.project_list);
-//        SwipeMenuListView rv = view.findViewById(R.id.project_list);
+
         db.collection("prototypes")
                 .whereEqualTo("creatorEmail", mAuth.getCurrentUser().getEmail())
                 .orderBy("timestamp", Query.Direction.DESCENDING)
@@ -76,8 +76,6 @@ public class tabProjectFragment extends Fragment {
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         projectNames.add(document.getString("name"));
                     }
-//                    RecyclerView.LayoutManager layoutManager = new GridLayoutManager(view.getContext(), 1);
-//                    rv.setLayoutManager(layoutManager);
                     rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
                     rv.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
                     ListAllProjectAdapter ia = new ListAllProjectAdapter(projectNames, view.getContext());

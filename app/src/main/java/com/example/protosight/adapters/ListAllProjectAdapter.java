@@ -44,22 +44,11 @@ public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAd
     @Override
     public void onBindViewHolder(@NonNull ListAllProjectAdapter.ProjectViewHolder holder, int position) {
         holder.currentProjectName.setText(this.projects.get(position));
-//        holder.currentProjectNameCardView.setOnClickListener(new View.OnClickListener(){
-//
-//            @Override
-//            public void onClick(View v) {
-//                Animation animation = new AlphaAnimation((float) 0.5, 0); //to change visibility from visible to invisible
-//                animation.setDuration(500); //1 second duration for each animation cycle
-//                animation.setInterpolator(new LinearInterpolator());
-//                animation.setRepeatCount(0); //repeating indefinitely
-//                holder.currentProjectNameCardView.setAnimation(animation);
-//
-//            }
-//        });
+
         holder.playPrototype.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "play the fking shit");
+                Log.d(TAG, "Play project : " + projects.get(position));
 
             }
         });
