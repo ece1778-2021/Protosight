@@ -114,23 +114,23 @@ public class PlayPrototype extends AppCompatActivity implements OnClickableAreaC
 
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.play_proto_menu, menu);
-//
-//        return true;
-//
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        int id = item.getItemId();
-//        if (id == R.id.stop_proto){
-//            Intent intent = new Intent(PlayPrototype.this, CreatorLandingPage.class);
-//            startActivity(intent);
-//        }
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.play_proto_menu, menu);
+
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.stop_proto){
+            Intent intent = new Intent(PlayPrototype.this, CreatorLandingPage.class);
+            startActivity(intent);
+        }
+        return true;
+    }
 
     private void displayImage(HotSpot hotSpot){
         StorageReference mStorageRef = storage.getReference();
