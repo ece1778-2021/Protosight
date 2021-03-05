@@ -5,6 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -44,7 +47,12 @@ public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAd
 
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "clickckckckck... project");
+                Animation animation = new AlphaAnimation((float) 0.5, 0); //to change visibility from visible to invisible
+                animation.setDuration(500); //1 second duration for each animation cycle
+                animation.setInterpolator(new LinearInterpolator());
+                animation.setRepeatCount(0); //repeating indefinitely
+                holder.currentProjectNameCardView.setAnimation(animation);
+
             }
         });
     }
