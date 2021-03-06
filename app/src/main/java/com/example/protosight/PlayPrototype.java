@@ -56,9 +56,10 @@ public class PlayPrototype extends AppCompatActivity implements OnClickableAreaC
     private String projectID;
     private ImageView imageHolder;
     private long ONE_MEGABYTE = 1024 * 1024;
-    private HotSpot first;
+
+    ArrayList<HotSpot> hotSpots = new ArrayList<>();
     ClickableAreasImage clickableAreasImage;
-    List<ClickableArea> clickableAreas = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +83,8 @@ public class PlayPrototype extends AppCompatActivity implements OnClickableAreaC
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-                            ArrayList<HotSpot> hotSpots = new ArrayList<>();
+//                            ArrayList<HotSpot> hotSpots = new ArrayList<>();
+                            ArrayList<HotSpot> first = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 int x = ((Long) document.get("x")).intValue();
                                 int y = ((Long) document.get("y")).intValue();
@@ -96,13 +98,14 @@ public class PlayPrototype extends AppCompatActivity implements OnClickableAreaC
                                 hotSpot.setLinkImage(imageTo);
                                 hotSpot.setFirst(isFirst);
                                 hotSpots.add(hotSpot);
+
                                 if (isFirst){
-                                    displayImage(hotSpot);
-                                    first = hotSpot;
+                                    first.add(hotSpot);
                                 }
-                                Log.d(TAG, hotSpot.toMap().toString());
+
                             }
-//                            addClickable(first);
+                            displayImage(first);
+
 
 
                         } else {
@@ -132,16 +135,17 @@ public class PlayPrototype extends AppCompatActivity implements OnClickableAreaC
         return true;
     }
 
-    private void displayImage(HotSpot hotSpot){
+    private void displayImage(ArrayList<HotSpot> first){
         StorageReference mStorageRef = storage.getReference();
-        ConstraintLayout constraintLayout = findViewById(R.id.play_prototype_layout);
+
         imageHolder = findViewById(R.id.play_image);
-        mStorageRef.child(hotSpot.getRelatedImage()).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+        String imageRef = first.get(0).getRelatedImage();
+        mStorageRef.child(imageRef).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 imageHolder.setImageBitmap(bm);
-                addClickable(hotSpot);
+                addClickables(first);
 
             }
 
@@ -152,17 +156,63 @@ public class PlayPrototype extends AppCompatActivity implements OnClickableAreaC
     @Override
     public void onClickableAreaTouched(Object item) {
         if (item instanceof HotSpot) {
-            Log.d(TAG, "clickable clicked  - " + item.toString());
+
+            String nextImage = ((HotSpot) item).getLinkImage();
+            ArrayList<HotSpot> nexts = new ArrayList<>();
+            boolean found = false;
+            HotSpot last = null;
+            for (HotSpot s : hotSpots){
+
+                if (s.getRelatedImage().equals(nextImage)){
+                    nexts.add(s);
+                    found = true;
+                }
+                if (s.getLinkImage().equals(nextImage)){
+                    last = s;
+                }
+                
+            }
+
+            if (found){
+                displayImage(nexts);    
+            } else {
+                displayLastImage(last);
+            }
+            
+
         }
 
     }
 
-    private void addClickable(HotSpot hotSpot) {
+
+    private void displayLastImage(HotSpot hotSpot){
+        StorageReference mStorageRef = storage.getReference();
+
+        imageHolder = findViewById(R.id.play_image);
+        String imageRef = hotSpot.getLinkImage();
+        mStorageRef.child(imageRef).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                imageHolder.setImageBitmap(bm);
+
+            }
+
+        });
+    }
+
+
+    private void addClickables(ArrayList<HotSpot> hotSpot) {
 
 
         ImageView curr = findViewById(R.id.play_image);
         clickableAreasImage = new ClickableAreasImage(new PhotoViewAttacher(curr), PlayPrototype.this);
-        clickableAreas.add(new ClickableArea(hotSpot.getX(), hotSpot.getY(), hotSpot.getW(), hotSpot.getH(), hotSpot));
+        List<ClickableArea> clickableAreas = new ArrayList<>();
+        for (HotSpot s : hotSpot){
+            clickableAreas.add(new ClickableArea(s.getX(), s.getY(), s.getW(), s.getH(), s));
+        }
+        Log.d(TAG, clickableAreas.toString());
+
         clickableAreasImage.setClickableAreas(clickableAreas);
     }
 
