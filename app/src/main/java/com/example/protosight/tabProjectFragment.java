@@ -73,12 +73,16 @@ public class tabProjectFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     ArrayList<String> projectNames = new ArrayList<>();
+                    ArrayList<String> projectIDs = new ArrayList<>();
+                    ArrayList<String> firstImages = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         projectNames.add(document.getString("name"));
+                        projectIDs.add(document.getString("projectCode"));
+                        firstImages.add(document.getString("firstImageRef"));
                     }
                     rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
                     rv.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
-                    ListAllProjectAdapter ia = new ListAllProjectAdapter(projectNames, view.getContext());
+                    ListAllProjectAdapter ia = new ListAllProjectAdapter(projectNames, view.getContext(), projectIDs, firstImages);
                     rv.setAdapter(ia);
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());

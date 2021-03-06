@@ -17,8 +17,6 @@
     <string name="nav_projects">Prototypes</string>
     <string name="nav_tasks">Tests</string>
     <string name="nav_logout">Logout</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
     <!--Home page Fragment string -->
@@ -33,6 +31,8 @@
     <string name="link_screen">Link Screen</string>
     <string name="select_image_link_to">Select one screen to link to</string>
 
-
+    <!-- Play Prototype -->
+    <string name="paly_proto">Play Prototype</string>
+    <string name="stop_proto">Exit</string>
 
 </resources>

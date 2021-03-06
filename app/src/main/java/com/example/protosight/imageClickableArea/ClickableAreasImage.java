@@ -1,8 +1,6 @@
 package com.example.protosight.imageClickableArea;
 
-import android.content.res.Resources;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,6 +10,10 @@ import java.util.List;
 
 
 import uk.co.senab.photoview.PhotoViewAttacher;
+
+
+
+
 
 /**
  * Created by Lukas on 10/22/2015.
@@ -23,41 +25,25 @@ public class ClickableAreasImage implements PhotoViewAttacher.OnViewTapListener{
 
     private List<ClickableArea> clickableAreas;
 
-    private int imageWidthInPx;
-    private int imageHeightInPx;
 
     public ClickableAreasImage(PhotoViewAttacher attacher, OnClickableAreaClickedListener listener){
         this.attacher = attacher;
+        attacher.setScaleType(ImageView.ScaleType.CENTER);
         init(listener);
     }
 
     private void init(OnClickableAreaClickedListener listener) {
         this.listener = listener;
-        getImageDimensions(attacher.getImageView());
+
         attacher.setOnViewTapListener(this);
     }
 
 
-    private void getImageDimensions(ImageView imageView){
-   
-        BitmapDrawable drawable2 = (BitmapDrawable) imageView.getDrawable();
-        //After SDK 28 (Android Pie), getBitmap() returns the actual size of the image on the screen
-        if (Build.VERSION.SDK_INT > 27) {
-            imageWidthInPx = (int) (drawable2.getBitmap().getWidth());
-            imageHeightInPx = (int) (drawable2.getBitmap().getHeight());
-
-        } else {
-            imageWidthInPx = (int) (drawable2.getBitmap().getWidth() / Resources.getSystem().getDisplayMetrics().density);
-            imageHeightInPx = (int) (drawable2.getBitmap().getHeight() / Resources.getSystem().getDisplayMetrics().density);
-        }
-
-    }
-
 
     private List<ClickableArea> getClickAbleAreas(int x, int y){
+
         List<ClickableArea> clickableAreas= new ArrayList<>();
         for(ClickableArea ca : getClickableAreas()){
-            Log.d("HIERF", "" + ca.toString());
             if(isBetween(ca.getX(),(ca.getX()+ca.getW()),x)){
                 if(isBetween(ca.getY(),(ca.getY()+ca.getH()),y)){
                     clickableAreas.add(ca);
@@ -81,7 +67,6 @@ public class ClickableAreasImage implements PhotoViewAttacher.OnViewTapListener{
 
     @Override
     public void onViewTap(View view, float x, float y) {
-
         int px = (int) x;
         int py = (int) y;
         List<ClickableArea> clickableAreas = getClickAbleAreas(px, py);
@@ -89,6 +74,6 @@ public class ClickableAreasImage implements PhotoViewAttacher.OnViewTapListener{
             listener.onClickableAreaTouched(ca.getItem());
         }
     }
-    
+
 
 }
