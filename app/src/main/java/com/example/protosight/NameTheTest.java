@@ -37,6 +37,7 @@ public class NameTheTest extends AppCompatActivity {
             Intent intent = new Intent(this, CreateTask.class);
             intent.putExtra("projectCode", projectCode);
             intent.putExtra("theTestName", theTestName);
+            intent.putExtra("lastActivity", "NameTheTest");
             startActivity(intent);
         }
     }

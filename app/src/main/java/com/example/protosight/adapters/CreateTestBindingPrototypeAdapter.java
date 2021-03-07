@@ -59,7 +59,7 @@ public class CreateTestBindingPrototypeAdapter extends RecyclerView.Adapter<Crea
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            prototypeButton = itemView.findViewById(R.id.Prototype_Name);
+            prototypeButton = itemView.findViewById(R.id.task_1);
         }
     }
 }

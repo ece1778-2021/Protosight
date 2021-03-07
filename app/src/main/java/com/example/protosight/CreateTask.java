@@ -32,12 +32,16 @@ public class CreateTask extends AppCompatActivity {
         tabLayout = findViewById(R.id.test_testResult_controller);
         String testName = getIntent().getStringExtra("theTestName");
         String projectCode = getIntent().getStringExtra("projectCode");
+        String lastActivity = getIntent().getStringExtra("lastActivity");
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(testName);
         toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-        PagerAdapter pa = new TestViewPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+        PagerAdapter pa = new TestViewPagerAdapter(getSupportFragmentManager(),
+                                                    tabLayout.getTabCount(),
+                                                    testName,
+                                                    lastActivity);
         viewPager.setAdapter(pa);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
