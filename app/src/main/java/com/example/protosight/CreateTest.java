@@ -29,8 +29,8 @@ public class CreateTest extends AppCompatActivity {
         prototypesRecyclerView = findViewById(R.id.Prototype_RecyclerView);
         ArrayList<String[]> prototypeNames = new ArrayList<String[]>();
         String creatorEmail = mAuth.getCurrentUser().getUid();
-        prototypeNames.add(new String[]{"wo shi baba", "first prototype"});
-        prototypeNames.add(new String[]{"h","wer"});
+        prototypeNames.add(new String[]{"DEMO1", "first prototype"});
+        prototypeNames.add(new String[]{"DEMO2","second prototype"});
         //get prototype names from database
 //        db.collection("prototypes").
 //                whereEqualTo("creator_email", creatorEmail).

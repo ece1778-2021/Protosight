@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/questionnaire_question_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/questionnaire_question_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/black_border"
+        android:gravity="top"
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine"
+        android:maxLength="150"/>
+
+    <TextView
+        android:id="@+id/questionnaire_question_item_wordscount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="15dp"
+        android:gravity="end"
+        android:text="@string/_0_150"
+        android:textSize="16sp" />
+
+</LinearLayout>

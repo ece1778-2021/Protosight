@@ -25,7 +25,7 @@ public class NameTheTest extends AppCompatActivity {
         prototypeNameBar = findViewById(R.id.Test_Name);
         prototypeName = getIntent().getExtras().getString("prototypeName");
         Log.d("taggg",prototypeName);
-        prototypeNameBar.setText(prototypeName);
+        prototypeNameBar.setText(" "+prototypeName);
         projectCode = getIntent().getExtras().getString("projectCode");
     }
 

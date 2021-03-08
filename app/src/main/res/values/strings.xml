@@ -65,5 +65,7 @@
     <string name="create_up_to_three_questions">Create up to three questions</string>
     <string name="for_each_question_users_will_only_have_100_characters_to_respond">!For each question, users will only have 100 characters to respond</string>
     <string name="first_question">First Question:</string>
+    <string name="_0_150">0/150</string>
+    <string name="add_a_question">Add a question</string>
 
 </resources>

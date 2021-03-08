@@ -53,7 +53,7 @@
                 android:layout_marginTop="5dp"
                 android:text="@string/state_your_scenario_clearly_and_concisely"
                 android:textSize="18sp"
-                android:layout_marginStart="10dp"/>
+                android:layout_marginStart="10dp" />
 
             <EditText
                 android:id="@+id/task_scenario_content"
@@ -65,7 +65,8 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/black_border"
                 android:importantForAutofill="no"
-                android:inputType="text" />
+                android:inputType="textMultiLine"
+                android:maxLength="300"/>
 
             <TextView
                 android:id="@+id/task_scenario_words_count"
@@ -107,7 +108,8 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/black_border"
                 android:importantForAutofill="no"
-                android:inputType="text" />
+                android:inputType="textMultiLine"
+                android:maxLength="200"/>
 
             <TextView
                 android:id="@+id/user_task_words_count"
@@ -169,7 +171,8 @@
                 android:background="@drawable/black_border"
                 android:gravity="top"
                 android:importantForAutofill="no"
-                android:inputType="text" />
+                android:inputType="textMultiLine"
+                android:maxLength="150"/>
 
             <TextView
                 android:id="@+id/first_question_words_count"
@@ -178,8 +181,21 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="15dp"
                 android:gravity="end"
-                android:text="@string/_0_200"
+                android:text="@string/_0_150"
                 android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/add_question_button"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/my_add_task_buttom"
+                android:gravity="center"
+                android:text="@string/add_a_question"
+                android:textColor="#050505"
+                android:textSize="18sp"
+                app:backgroundTint="#F8F9FA" />
 
 
         </LinearLayout>
