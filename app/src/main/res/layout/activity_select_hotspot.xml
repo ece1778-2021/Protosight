@@ -9,7 +9,7 @@
     android:id="@+id/select_const"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+
     tools:context=".SelectHotspot"
     >
 
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blue_primary"
-
+        android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
         app:title="Select Link"
         app:layout_constraintEnd_toEndOf="parent"
