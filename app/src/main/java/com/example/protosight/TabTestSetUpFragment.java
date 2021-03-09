@@ -12,13 +12,13 @@ import androidx.fragment.app.Fragment;
 
 
 
-public class tabTestSetUpFragment extends Fragment {
+public class TabTestSetUpFragment extends Fragment {
 
     private String testName;
     private String lastActivity;
     private LinearLayout linearLayout;
 
-    public tabTestSetUpFragment(String testName, String lastActivity){
+    public TabTestSetUpFragment(String testName, String lastActivity){
         this.testName = testName;
         this.lastActivity = lastActivity;
     }
