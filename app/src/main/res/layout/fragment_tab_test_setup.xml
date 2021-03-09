@@ -58,6 +58,7 @@
         android:id="@+id/test_code_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:text="@string/test_code"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -72,6 +73,7 @@
         android:id="@+id/test_code_intsruction"
         android:layout_width="381dp"
         android:layout_height="39dp"
+        android:layout_marginStart="8dp"
         android:text="@string/generate_a_test_code_only_after_all_your_tasks_have_been_finalized"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -102,8 +104,6 @@
         android:layout_marginStart="16dp"
         android:text="@string/generate"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/test_code"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/test_code_instruction_2"
         app:layout_constraintVertical_bias="0.219" />
@@ -116,7 +116,9 @@
         android:background="@drawable/black_border"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/generate_testcode"
         app:layout_constraintTop_toBottomOf="@+id/test_code_instruction_2"
-        app:layout_constraintVertical_bias="0.216" />
+        app:layout_constraintVertical_bias="0.214" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
