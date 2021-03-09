@@ -83,6 +83,7 @@
         android:layout_marginEnd="32dp"
         android:onClick="signInOnClick"
         android:background="@drawable/round_bd"
+        android:textColor="@color/white"
         android:text="@string/action_sign_in_short"
         app:backgroundTint="@color/blue_primary"
         app:layout_constraintEnd_toEndOf="parent"

@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.example.protosight.models.HotSpot;
 import com.example.protosight.views.DragRectView;
@@ -86,6 +87,7 @@ public class SelectHotspot extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
 
         setSupportActionBar(toolbar);
+
 
 
 
@@ -178,7 +180,7 @@ public class SelectHotspot extends AppCompatActivity {
             i.putExtra("hotspot", hotspot);
             displayImage = newImage;
             startActivity(i);
-            overridePendingTransition( R.anim.slide_out_up, R.anim.slide_in_up );
+//            overridePendingTransition( R.anim.slide_out_up, R.anim.slide_in_up );
 
         } else if (id == R.id.save_hotspot){
             Log.d(TAG, "Saving....." + getHotSpots().toString());
