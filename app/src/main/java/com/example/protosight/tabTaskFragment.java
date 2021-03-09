@@ -1,5 +1,6 @@
 package com.example.protosight;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -39,6 +40,8 @@ public class tabTaskFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "add task.....");
+                Intent intent = new Intent(getActivity(), CreateTest.class);
+                startActivity(intent);
             }
         });
         return view;
