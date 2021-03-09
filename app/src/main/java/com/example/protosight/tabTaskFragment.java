@@ -11,9 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link tabTaskFragment#newInstance} factory method to
+ *
  * create an instance of this fragment.
  */
 public class tabTaskFragment extends Fragment {
@@ -34,8 +36,8 @@ public class tabTaskFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_tab_task, container, false);
-        LinearLayout linearLayout = view.findViewById(R.id.add_task);
-        linearLayout.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton button = view.findViewById(R.id.add_task);
+        button.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
