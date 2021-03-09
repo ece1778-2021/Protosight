@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
+
     tools:context=".CreatorLandingPage">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:background="@color/blue_primary"
             android:minHeight="?attr/actionBarSize"
+            android:fitsSystemWindows="true"
             app:title="Protosight"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
