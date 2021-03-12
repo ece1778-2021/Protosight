@@ -3,6 +3,7 @@ package com.example.protosight;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,22 +12,43 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class FillTheTask extends AppCompatActivity {
 
+    private String lastActivity;
+    private String testID;
+    private String projectCode;
+
+    private FirebaseFirestore db;
     private LinearLayout myLinearLayout;
-    private EditText taskScenarioContent;
-    private EditText userTaskContent;
-    private EditText firstQuestionContent  ;
+    private EditText task_scenario;
+    private EditText user_task;
+    private EditText first_question;
     private TextView taskScenarioContentWordsCount;
     private TextView userTaskContentWordsCount;
     private TextView firstQuestionWordsCount;
-    private ArrayList<Object> allContents;
     private int howManyQuestions;
-    private ArrayList<String> questionTitleList= new ArrayList<String>();
+    private String[] questionTitleList = new String[]{
+            "Second Question",
+            "Third Question",
+            "Fourth Question",
+            "Fifth Question"};
+    private String[] allEditView = new String[]{
+            "task scenario",
+            "user task",
+            "first question",
+            "second question",
+            "third question",
+            "fourth question",
+            "fifth question"};
+    private HashMap<String, String> tasks = new HashMap<String, String>();
+    private String myId;
 
 
 
@@ -35,13 +57,20 @@ public class FillTheTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_in_task);
 
-        howManyQuestions = 0;
-        questionTitleList.add("Second Question");
-        questionTitleList.add("Third Question");
+        lastActivity = getIntent().getStringExtra("lastActivity");
+        testID = getIntent().getStringExtra("testID");
+        projectCode = getIntent().getStringExtra("projectCode");
 
-        taskScenarioContent = findViewById(R.id.task_scenario_content);
-        taskScenarioContentWordsCount = findViewById(R.id.task_scenario_words_count);
+        db = FirebaseFirestore.getInstance();
+
         myLinearLayout = findViewById(R.id.task_creation_linearLayout);
+
+        myId = db.collection("tasks").document().getId();
+
+        howManyQuestions = 0;
+
+        task_scenario = findViewById(R.id.task_scenario_content);
+        taskScenarioContentWordsCount = findViewById(R.id.task_scenario_words_count);
         TextWatcher taskScenarioTextEditorWatcher = new TextWatcher() {
 
             @Override
@@ -55,9 +84,9 @@ public class FillTheTask extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         };
-        taskScenarioContent.addTextChangedListener(taskScenarioTextEditorWatcher);
+        task_scenario.addTextChangedListener(taskScenarioTextEditorWatcher);
 
-        userTaskContent = findViewById(R.id.user_task_content);
+        user_task = findViewById(R.id.user_task_content);
         userTaskContentWordsCount = findViewById(R.id.user_task_words_count);
         TextWatcher userTaskTextEditorWatcher = new TextWatcher() {
             @Override
@@ -71,9 +100,9 @@ public class FillTheTask extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         };
-        userTaskContent.addTextChangedListener(userTaskTextEditorWatcher);
+        user_task.addTextChangedListener(userTaskTextEditorWatcher);
 
-        firstQuestionContent = findViewById(R.id.user_task_content);
+        first_question = findViewById(R.id.user_task_content);
         firstQuestionWordsCount = findViewById(R.id.first_question_words_count);
         TextWatcher firstQuestionTextEditorWatcher = new TextWatcher() {
             @Override
@@ -87,25 +116,56 @@ public class FillTheTask extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {}
         };
-        firstQuestionContent.addTextChangedListener(firstQuestionTextEditorWatcher);
+        first_question.addTextChangedListener(firstQuestionTextEditorWatcher);
+
 
         Button button = findViewById(R.id.add_question_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (howManyQuestions<2) {
-                    addQuestionnaireQuestion();
+                if (howManyQuestions<4) {
+                    addQuestionnaireQuestion("");
                 }
             }
         });
+        if (lastActivity.equals("comingBack")){
+            String taskID = getIntent().getStringExtra("taskID");
+            db.collection("tasks").
+                    document(taskID).
+                    get().
+                    addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            Map taskMap = documentSnapshot.getData();
+                            int mapIndex = 0;
+                            int linearLayoutIndex = 0;
+                            while (mapIndex<taskMap.size()-2){
+                                if (linearLayoutIndex>=myLinearLayout.getChildCount()){
+                                    String h =(String) taskMap.get(allEditView[mapIndex]);
+                                    addQuestionnaireQuestion((String) taskMap.get(allEditView[mapIndex]));
+                                    mapIndex += 1;
+                                }
+                                else if (myLinearLayout.getChildAt(linearLayoutIndex) instanceof EditText){
+                                    ((EditText) myLinearLayout.getChildAt(linearLayoutIndex)).setText((String) taskMap.get(allEditView[mapIndex]));
+                                    mapIndex += 1;
+                                }
+                                linearLayoutIndex += 1;
+                            }
+                        }
+                    });
+        }
     }
 
-    private void addQuestionnaireQuestion(){
+
+    private void addQuestionnaireQuestion(String content){
         View questionView = getLayoutInflater().inflate(R.layout.task_questionnaire_question_item, null);
         EditText questionContent = questionView.findViewById(R.id.questionnaire_question_item_content);
+        if (!content.equals("")){
+            questionContent.setText(content);
+        }
         TextView questionWordsCount = questionView.findViewById(R.id.questionnaire_question_item_wordscount);
         TextView questionTitle = questionView.findViewById(R.id.questionnaire_question_item_title);
-        questionTitle.setText(questionTitleList.get(howManyQuestions));
+        questionTitle.setText(questionTitleList[howManyQuestions]);
         howManyQuestions += 1;
         TextWatcher questionTextEditorWatcher = new TextWatcher() {
             @Override
@@ -124,4 +184,45 @@ public class FillTheTask extends AppCompatActivity {
         myLinearLayout.addView(questionView, position);
     }
 
+
+    public void saveTheTask(View view) {
+        int currentEditViewIndex = 0;
+        for (int i=1; i<myLinearLayout.getChildCount();i++){
+            if (myLinearLayout.getChildAt(i) instanceof EditText){
+                tasks.put(allEditView[currentEditViewIndex], ((EditText) myLinearLayout.getChildAt(i)).getText().toString());
+                currentEditViewIndex += 1;
+            } else if(myLinearLayout.getChildAt(i) instanceof LinearLayout){
+                LinearLayout addedLayout = (LinearLayout) myLinearLayout.getChildAt(i);
+                tasks.put(allEditView[currentEditViewIndex], ((EditText) addedLayout.getChildAt(1)).getText().toString());
+                currentEditViewIndex += 1;
+            }
+        }
+        tasks.put("projectCode", projectCode);
+        tasks.put("testID", testID);
+
+        if (lastActivity.equals("NameTheTest")) {
+            Log.d("ididid",myId);
+            db.collection("tasks").
+                    document(myId).
+                    set(tasks).
+                    addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            tasks.clear();
+                            Log.d("Upload", "The upload of tasks is successful!");
+                        }
+                    });
+        } else {
+            db.collection("tasks").
+                    document(getIntent().getStringExtra("taskID")).
+                    set(tasks).
+                    addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            tasks.clear();
+                            Log.d("Update", "The update of tasks is successful!");
+                        }
+                    });
+        }
+    }
 }

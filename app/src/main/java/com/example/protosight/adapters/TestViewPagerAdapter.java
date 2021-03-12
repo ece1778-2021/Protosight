@@ -12,14 +12,20 @@ import com.example.protosight.TabTestSetUpFragment;
 public class TestViewPagerAdapter extends FragmentPagerAdapter {
 
     int numTabs;
-    String testName;
+    private String testID;
     private String lastActivity;
+    private String projectCode;
 
-    public TestViewPagerAdapter(@NonNull FragmentManager fm, int behavior, String testName, String lastActivity) {
+    public TestViewPagerAdapter(@NonNull FragmentManager fm,
+                                int behavior,
+                                String testID,
+                                String lastActivity,
+                                String projectCode) {
         super(fm, behavior);
         this.numTabs = behavior;
-        this.testName = testName;
+        this.testID = testID;
         this.lastActivity = lastActivity;
+        this.projectCode = projectCode;
     }
 
     @NonNull
@@ -27,7 +33,7 @@ public class TestViewPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return new TabTestSetUpFragment(testName, lastActivity);
+                return new TabTestSetUpFragment(testID, lastActivity, projectCode);
             case 1:
                 return new tabTaskFragment();
             default:
