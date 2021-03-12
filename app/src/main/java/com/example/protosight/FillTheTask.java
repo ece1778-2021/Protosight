@@ -40,13 +40,13 @@ public class FillTheTask extends AppCompatActivity {
             "Fourth Question",
             "Fifth Question"};
     private String[] allEditView = new String[]{
-            "task scenario",
-            "user task",
-            "first question",
-            "second question",
-            "third question",
-            "fourth question",
-            "fifth question"};
+            "taskScenario",
+            "userTask",
+            "firstQuestion",
+            "secondQuestion",
+            "thirdQuestion",
+            "fourthQuestion",
+            "fifthQuestion"};
     private HashMap<String, String> tasks = new HashMap<String, String>();
     private String myId;
 
@@ -201,7 +201,6 @@ public class FillTheTask extends AppCompatActivity {
         tasks.put("testID", testID);
 
         if (lastActivity.equals("NameTheTest")) {
-            Log.d("ididid",myId);
             db.collection("tasks").
                     document(myId).
                     set(tasks).

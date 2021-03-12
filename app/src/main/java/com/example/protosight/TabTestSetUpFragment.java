@@ -112,6 +112,7 @@ public class TabTestSetUpFragment extends Fragment {
                                 theMap.put("taskID", document.getId());
                                 taskData.add(theMap);
                             }
+                            projectCode = (String) ((Map) taskData.get(0)).get("projectCode");
                             for (int i=0;i<taskData.size(); i++){
                                 addTaskComingBackForEditing((Map) taskData.get(i));
                             }
