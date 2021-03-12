@@ -31,6 +31,7 @@ public class CreateTask extends AppCompatActivity {
         viewPager = findViewById(R.id.test_viewPager);
         tabLayout = findViewById(R.id.test_testResult_controller);
         String testName = getIntent().getStringExtra("theTestName");
+        String testID = getIntent().getStringExtra("testID");
         String projectCode = getIntent().getStringExtra("projectCode");
         String lastActivity = getIntent().getStringExtra("lastActivity");
         setSupportActionBar(toolbar);
@@ -40,8 +41,9 @@ public class CreateTask extends AppCompatActivity {
         toggle.syncState();
         PagerAdapter pa = new TestViewPagerAdapter(getSupportFragmentManager(),
                                                     tabLayout.getTabCount(),
-                                                    testName,
-                                                    lastActivity);
+                                                    testID,
+                                                    lastActivity,
+                                                    projectCode);
         viewPager.setAdapter(pa);
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
