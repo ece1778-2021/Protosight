@@ -9,16 +9,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Protosight">
-        <activity android:name=".PlayPrototype"></activity>
+        <activity android:name=".ParticipantLandingPage"></activity>
+        <activity android:name=".PlayPrototype" />
         <activity android:name=".SelectHotspot" />
         <activity android:name=".HotspotsLinkScreen" />
         <activity android:name=".CreateProject" />
         <activity android:name=".CreatorLandingPage" />
         <activity android:name=".SignUp" />
-        <activity android:name=".CreateTest"/>
-        <activity android:name=".NameTheTest"/>
-        <activity android:name=".CreateTask"/>
-        <activity android:name=".FillTheTask"/>
+        <activity android:name=".CreateTest" />
+        <activity android:name=".NameTheTest" />
+        <activity android:name=".CreateTask" />
+        <activity android:name=".FillTheTask" />
         <activity
             android:name=".Login"
             android:label="@string/app_name">

@@ -3,8 +3,10 @@ package com.example.protosight;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -13,7 +15,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.protosight.adapters.ListAllProjectAdapter;
 import com.example.protosight.adapters.ListAllTestAdapter;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.EventListener;
@@ -67,22 +72,29 @@ public class tabTaskFragment extends Fragment {
             }
         });
         db.collection("tests").
-                whereEqualTo("creatorEmail", myAuth.getCurrentUser().getEmail()).
-                addSnapshotListener(new EventListener<QuerySnapshot>() {
+                whereEqualTo("creatorEmail", myAuth.getCurrentUser().getEmail())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        for (QueryDocumentSnapshot document: value){
-                            testInfo.add(document.getData());
-                        }
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document: task.getResult()){
+                                testInfo.add(document.getData());
+                            }
 
-                        recyclerView = view.findViewById(R.id.test_list);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
-                        if (testInfo.size()!=0) {
-                            ListAllTestAdapter adapter = new ListAllTestAdapter(tabTaskFragment.this, testInfo);
-                            recyclerView.setAdapter(adapter);
+                            recyclerView = view.findViewById(R.id.test_list);
+                            recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+                            if (testInfo.size()!=0) {
+                                ListAllTestAdapter adapter = new ListAllTestAdapter(tabTaskFragment.this, testInfo);
+                                recyclerView.setAdapter(adapter);
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
                         }
                     }
                 });
+
+
         return view;
     }
 }

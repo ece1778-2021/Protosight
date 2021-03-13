@@ -116,6 +116,7 @@
         android:layout_marginEnd="32dp"
         android:text="Continue as Participant"
         android:textColor="@color/blue_primary"
+        android:onClick="continueAsParticipant"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
