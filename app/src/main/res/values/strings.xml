@@ -69,4 +69,11 @@
     <string name="add_a_question">Add a question</string>
     <string name="save_task">Save Task</string>
 
+
+    <!-- Participant test -->
+    <string name="hello">Hello</string>
+    <string name="enter_code_msg">Please enter the test code"</string>
+    <string name="submit_code">Submit"</string>
+
+
 </resources>
