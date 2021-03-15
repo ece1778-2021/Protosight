@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Protosight">
-        <activity android:name=".ParticipantInstructionPage"></activity>
+        <activity android:name=".ParticipantListTasksPage"></activity>
+        <activity android:name=".ParticipantInstructionPage" />
         <activity android:name=".ParticipantLandingPage" />
         <activity android:name=".PlayPrototype" />
         <activity android:name=".SelectHotspot" />

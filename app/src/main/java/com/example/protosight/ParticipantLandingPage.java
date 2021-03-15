@@ -47,6 +47,7 @@ public class ParticipantLandingPage extends AppCompatActivity {
                                 textView.setVisibility(View.INVISIBLE);
                                 Intent intent = new Intent(ParticipantLandingPage.this, ParticipantInstructionPage.class);
                                 intent.putExtra("testCode", code);
+                                intent.putExtra("testName", (String) document.getData().get("testName"));
                                 startActivity(intent);
 
 
