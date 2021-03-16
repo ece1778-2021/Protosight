@@ -22,5 +22,5 @@
         android:gravity="center"
         android:text="test"
         android:textSize="18sp"
-        app:backgroundTint="#91BADA" />
+        app:backgroundTint="@color/blue_primary" />
 </LinearLayout>
