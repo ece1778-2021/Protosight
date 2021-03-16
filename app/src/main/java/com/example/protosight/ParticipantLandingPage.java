@@ -24,6 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class ParticipantLandingPage extends AppCompatActivity {
     private FirebaseFirestore db;
     private String TAG = "ParticipantLandingPage";
+    public static String participantName;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +36,8 @@ public class ParticipantLandingPage extends AppCompatActivity {
 
     public void testCodeOnSubmit(View view){
         EditText editText = findViewById(R.id.test_code);
+        EditText editTextName = findViewById(R.id.participant_name);
+        participantName = editTextName.getText().toString();
         String code = editText.getText().toString();
         db.collection("tests").document(code).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

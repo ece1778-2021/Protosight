@@ -11,8 +11,8 @@
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
 
-        android:layout_height="160dp"
-        android:layout_marginTop="150dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="5dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -21,90 +21,95 @@
 
         <TextView
             android:id="@+id/helloview"
-            android:layout_width="170dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="195dp"
+            android:textColor="#5025FC"
 
-            android:gravity="center_vertical"
-            android:paddingLeft="30dp"
+
+            android:gravity="center_vertical|center"
+            android:paddingLeft="18dp"
             android:text="@string/hello"
-            android:textSize="36sp" />
+            android:textSize="18sp" />
 
-        <TextView
-            android:id="@+id/please_enter"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
+        <EditText
+            android:id="@+id/participant_name"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_below="@+id/helloview"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:gravity="center_vertical"
-            android:paddingStart="45dp"
-            android:text="@string/enter_code_msg"
-            android:textSize="18sp" />
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="4dp"
+            android:hint="Name"
+            android:layout_marginEnd="50dp"
+            android:background="@drawable/round_border"
+            android:gravity="center"
+            android:textColor="#090909"
+            android:textSize="18sp"
+            android:textColorHint="@color/blue_primary"
+             />
 
 
         <EditText
             android:id="@+id/test_code"
             android:layout_width="300dp"
             android:layout_height="50dp"
-            android:layout_below="@+id/please_enter"
+            android:layout_below="@+id/participant_name"
+
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="50dp"
-            android:layout_marginTop="4dp"
-
-            android:layout_marginEnd="50dp"
+            android:layout_marginStart="49dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="52dp"
             android:background="@drawable/round_border"
             android:gravity="center"
+            android:hint="Test code"
             android:textColor="#090909"
+            android:textColorHint="@color/blue_primary"
             android:textSize="18sp"
 
-            android:textStyle="bold" />
+             />
 
     </RelativeLayout>
 
-
     <Button
+        android:id="@+id/test_code_enter"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:id="@+id/test_code_enter"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/submit_code"
-        android:textColor="@color/blue_primary"
+        android:layout_marginTop="8dp"
         android:background="@drawable/round_border"
         android:onClick="testCodeOnSubmit"
+        android:text="@string/submit_code"
+        android:textColor="@color/blue_primary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/invalid_code" />
 
     <TextView
+        android:id="@+id/invalid_code"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/invalid_code"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
         android:text="@string/invalid_code"
-        android:textSize="12sp"
         android:textColor="#E32525"
+        android:textSize="12sp"
         android:visibility="invisible"
 
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
-    <androidx.appcompat.widget.Toolbar
+    <ImageView
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/blue_primary"
+        android:background="@drawable/ic_logo_page"
         android:fitsSystemWindows="true"
         android:minHeight="?attr/actionBarSize"
-        app:title="Participant"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
