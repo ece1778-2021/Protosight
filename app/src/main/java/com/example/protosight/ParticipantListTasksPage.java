@@ -32,7 +32,7 @@ public class ParticipantListTasksPage extends AppCompatActivity {
         setContentView(R.layout.activity_participant_list_tasks_page);
 
         TextView textView = findViewById(R.id.testName);
-        textView.setText(getIntent().getStringExtra("testName"));
+        textView.setText("Hello " + ParticipantLandingPage.participantName);
         String testCode = getIntent().getStringExtra("testCode");
 
         db = FirebaseFirestore.getInstance();

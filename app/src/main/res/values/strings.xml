@@ -74,7 +74,7 @@
     <string name="hello">Welcome Study Participant</string>
     <string name="enter_code_msg">Please enter the test code</string>
     <string name="submit_code">Enter</string>
-    <string name="start_test">Start</string>
+    <string name="start_test">Start Task</string>
     <string name="invalid_code">Invalid Code</string>
 
 

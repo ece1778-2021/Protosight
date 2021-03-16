@@ -19,9 +19,13 @@ public class ParticipantEnterSingleTask extends AppCompatActivity {
 
         Intent intent = getIntent();
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("task");
-        String instruction = hashMap.get("taskScenario") + "\n\n" + hashMap.get("userTask");
+        String instruction = hashMap.get("taskScenario");
         TextView i = findViewById(R.id.instruction);
         i.setText(instruction);
+
+        TextView task = findViewById(R.id.task_info);
+        task.setText(hashMap.get("userTask"));
+
     }
 
     public void startTaskOnClick(View view){
