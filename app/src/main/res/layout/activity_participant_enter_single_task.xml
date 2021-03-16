@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ParticipantInstructionPage">
+    tools:context=".ParticipantEnterSingleTask">
+
 
     <Button
         android:id="@+id/startTest"
@@ -14,11 +15,11 @@
         android:text="@string/start_test"
         android:layout_marginTop="16dp"
         android:textColor="@color/white"
-        android:onClick="startTestOnClick"
+        android:onClick="startTaskOnClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/instruction" />
 
 
     <TextView
@@ -37,17 +38,19 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/instruction"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:text="You will be presented with up to 3 tasks in which you will attempt to complete.\n\n Complete the tasks in specific order."
 
         android:textSize="18dp"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.example.protosight.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
@@ -14,6 +15,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.protosight.ParticipantEnterSingleTask;
+import com.example.protosight.ParticipantListTasksPage;
 import com.example.protosight.R;
 
 import java.util.ArrayList;
@@ -52,6 +55,16 @@ public class ParticipantListTaskAdapter extends RecyclerView.Adapter<Participant
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "task click " + tasks.get(position).toString());
+                    String projectCode = (String) ((HashMap) tasks.get(position)).get("projectCode");
+                    String testID = (String) ((HashMap) tasks.get(position)).get("testID");
+                    String taskScenario = (String) ((HashMap) tasks.get(position)).get("taskScenario");
+                    String userTask = (String) ((HashMap) tasks.get(position)).get("userTask");
+                    HashMap<String, Object> task = (HashMap<String, Object>) tasks.get(position);
+                    Intent intent = new Intent(context, ParticipantEnterSingleTask.class);
+                    intent.putExtra("task", task);
+                    context.startActivity(intent);
+
+
             }
         });
     }
