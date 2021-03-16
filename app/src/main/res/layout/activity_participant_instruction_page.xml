@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#ffff"
     tools:context=".ParticipantInstructionPage">
 
     <ImageView
@@ -17,48 +18,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/startTest"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:background="@drawable/round_bd"
-        android:text="@string/start_test"
-        android:layout_marginTop="16dp"
-        android:textColor="@color/white"
-        android:onClick="startTestOnClick"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/instruction_pager"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
 
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginEnd="16dp"
-        android:text="Instruction"
-        android:textSize="30dp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo_top" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:text="You will be presented with up to 3 tasks in which you will attempt to complete.\n\n Complete the tasks in specific order."
-
-        android:textSize="18dp"
-
+        android:layout_marginEnd="28dp"
+        android:layout_marginBottom="16dp"
+        android:background="#ffffff"
+        android:drawableRight="@drawable/ic_arrow_forward"
+        android:drawableTint="@color/gradient_start_color"
+        android:text="Next"
+        android:textColor="@color/gradient_start_color"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tab_indicator"
+        app:layout_constraintVertical_bias="0.92" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_indicator"
+        app:tabBackground="@drawable/indicator_selector"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/instruction_pager">
+
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginStart="28dp"
+        android:layout_marginBottom="16dp"
+        android:text="Skip"
+        android:onClick="skipTestOnClick"
+        android:textColor="@color/gradient_start_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_next"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
