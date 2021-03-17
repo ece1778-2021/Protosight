@@ -76,6 +76,7 @@
     <string name="submit_code">Enter</string>
     <string name="start_test">Start Task</string>
     <string name="invalid_code">Invalid Code</string>
+    <string name="permission_text">permission_text</string>
 
 
 </resources>

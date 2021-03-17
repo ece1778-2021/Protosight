@@ -1,17 +1,27 @@
 package com.example.protosight;
 
 import androidx.annotation.NonNull;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.projection.MediaProjectionManager;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+
 
 import com.example.protosight.imageClickableArea.ClickableArea;
 import com.example.protosight.imageClickableArea.ClickableAreasImage;
@@ -20,40 +30,58 @@ import com.example.protosight.models.HotSpot;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+import com.hbisoft.hbrecorder.HBRecorder;
+import com.hbisoft.hbrecorder.HBRecorderListener;
 
+import java.io.File;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
-public class ParticipantStartTask extends AppCompatActivity implements OnClickableAreaClickedListener {
+public class ParticipantStartTask extends AppCompatActivity implements OnClickableAreaClickedListener, HBRecorderListener {
     private Toolbar toolbar;
     private String TAG = "ParticipantStartTask";
     private FirebaseFirestore db;
-    private String firstImageRef;
+
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private String projectID;
     private ImageView imageHolder;
     private long ONE_MEGABYTE = 1024 * 1024;
-
+    private static int counter = 0;
     ArrayList<HotSpot> hotSpots = new ArrayList<>();
     ClickableAreasImage clickableAreasImage;
 
+
+    private static final int SCREEN_RECORD_REQUEST_CODE = 1000;
+
+    HBRecorder hbRecorder;
+
+
+
+
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participant_start_task);
         Intent intent = getIntent();
         HashMap<String, String> hashMap = (HashMap<String, String>) intent.getSerializableExtra("task");
-
+        hbRecorder = new HBRecorder(this, this);
+        storage = FirebaseStorage.getInstance();
+        hbRecorder.isAudioEnabled(true);
         toolbar = findViewById(R.id.toolbar);
         storage = FirebaseStorage.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -62,9 +90,6 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
 
         setSupportActionBar(toolbar);
         projectID = hashMap.get("projectCode");
-//        firstImageRef = intent.getStringExtra("firstImageRef");
-        Log.d(TAG, "Wtf - - -" + projectID);
-
 
         db.collection("hotspots")
                 .whereEqualTo("projectID", projectID)
@@ -106,6 +131,9 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
 
                     }
                 });
+
+
+        startRecordingScreen();
     }
 
     @Override
@@ -213,5 +241,100 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
     }
 
 
+    public void stopRecordingOnClick(View view){
+        FloatingActionButton button = findViewById(R.id.endTask);
+        if (counter % 2 == 0) {
+            button.setImageResource(R.drawable.ic_resume);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Have you completed your task?\n" +
+                    "If yes, you work will be saved.\n")
+                    .setCancelable(false)
+                    .setPositiveButton("Save", new DialogInterface.OnClickListener() {
+                        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Log.d(TAG, "SAVING TASK");
+                            hbRecorder.stopScreenRecording();
+                            saveVideoToStorage();
 
+                            Log.d(TAG, "SAVING TASK..recording .." + hbRecorder.getFilePath());
+                        }
+                    })
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+
+        } else {
+            button.setImageResource(R.drawable.ic_stop);
+        }
+        counter ++;
+
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void saveVideoToStorage() {
+        StorageReference ref;
+        String path = hbRecorder.getFilePath();
+        String refPath = "ScreenRecord/"
+                + projectID
+                + "/"
+                + path.substring(path.lastIndexOf("/"), path.length());
+
+        ref = storage.getReference().child(refPath);
+        Uri file = Uri.fromFile(new File(path));
+        ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d(TAG, path + "  UPLOADED");
+
+
+            }
+
+        });
+
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    private void startRecordingScreen() {
+        MediaProjectionManager mediaProjectionManager = (MediaProjectionManager) getSystemService(Context.MEDIA_PROJECTION_SERVICE);
+        Intent permissionIntent = mediaProjectionManager != null ? mediaProjectionManager.createScreenCaptureIntent() : null;
+        startActivityForResult(permissionIntent, SCREEN_RECORD_REQUEST_CODE);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SCREEN_RECORD_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                //Start screen recording
+                hbRecorder.startScreenRecording(data, resultCode, this);
+
+            }
+        }
+    }
+
+    @Override
+    public void HBRecorderOnStart() {
+        Log.e("HBRecorder", "HBRecorderOnStart called");
+    }
+
+    @Override
+    public void HBRecorderOnComplete() {
+
+    }
+
+    @Override
+    public void HBRecorderOnError(int errorCode, String reason) {
+
+    }
 }
