@@ -45,13 +45,16 @@ public class ParticipantListTasksPage extends AppCompatActivity {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             ArrayList<Map<String, Object>> tasks = new ArrayList<>();
+                            ArrayList<String> taskIds = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 tasks.add(document.getData());
+                                taskIds.add(document.getId());
+
                             }
                             RecyclerView recyclerView = findViewById(R.id.participant_list_task);
 
                             recyclerView.setLayoutManager(new LinearLayoutManager(ParticipantListTasksPage.this));
-                            ParticipantListTaskAdapter ad = new ParticipantListTaskAdapter(tasks, ParticipantListTasksPage.this);
+                            ParticipantListTaskAdapter ad = new ParticipantListTaskAdapter(tasks, ParticipantListTasksPage.this, taskIds);
                             recyclerView.setAdapter(ad);
 
                         } else {

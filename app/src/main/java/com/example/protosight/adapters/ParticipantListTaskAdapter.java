@@ -27,12 +27,14 @@ public class ParticipantListTaskAdapter extends RecyclerView.Adapter<Participant
 
     private ArrayList<Map<String, Object>> tasks;
     private Context context;
+    private ArrayList<String> taskIds;
     private String TAG = "ParticipantListTaskAdapter";
     private int[] status;
 
-    public ParticipantListTaskAdapter(ArrayList<Map<String, Object>> tasks, Context context) {
+    public ParticipantListTaskAdapter(ArrayList<Map<String, Object>> tasks, Context context, ArrayList<String> taskIds) {
         this.tasks = tasks;
         this.context = context;
+        this.taskIds = taskIds;
         status = new int[tasks.size()];
         status[0] = 1;
     }
@@ -62,6 +64,7 @@ public class ParticipantListTaskAdapter extends RecyclerView.Adapter<Participant
                     HashMap<String, Object> task = (HashMap<String, Object>) tasks.get(position);
                     Intent intent = new Intent(context, ParticipantEnterSingleTask.class);
                     intent.putExtra("task", task);
+                    intent.putExtra("taskID", taskIds.get(position));
                     context.startActivity(intent);
 
 

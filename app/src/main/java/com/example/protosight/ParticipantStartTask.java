@@ -16,6 +16,7 @@ import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -27,7 +28,9 @@ import com.example.protosight.imageClickableArea.ClickableArea;
 import com.example.protosight.imageClickableArea.ClickableAreasImage;
 import com.example.protosight.imageClickableArea.OnClickableAreaClickedListener;
 import com.example.protosight.models.HotSpot;
+import com.example.protosight.models.TaskResult;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -42,6 +45,7 @@ import com.hbisoft.hbrecorder.HBRecorder;
 import com.hbisoft.hbrecorder.HBRecorderListener;
 
 import java.io.File;
+
 import java.util.ArrayList;
 
 import java.util.HashMap;
@@ -53,6 +57,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
     private Toolbar toolbar;
     private String TAG = "ParticipantStartTask";
     private FirebaseFirestore db;
+    private String taskID;
 
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
@@ -70,8 +75,6 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
 
 
 
-
-
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,9 +82,15 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
         setContentView(R.layout.activity_participant_start_task);
         Intent intent = getIntent();
         HashMap<String, String> hashMap = (HashMap<String, String>) intent.getSerializableExtra("task");
+        taskID = intent.getStringExtra("taskID");
+
+
         hbRecorder = new HBRecorder(this, this);
+
         storage = FirebaseStorage.getInstance();
         hbRecorder.isAudioEnabled(true);
+        hbRecorder.setOutputPath(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath());
+
         toolbar = findViewById(R.id.toolbar);
         storage = FirebaseStorage.getInstance();
         db = FirebaseFirestore.getInstance();
@@ -99,7 +108,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
-//                            ArrayList<HotSpot> hotSpots = new ArrayList<>();
+
                             ArrayList<HotSpot> first = new ArrayList<>();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 int x = ((Long) document.get("x")).intValue();
@@ -255,7 +264,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
                         public void onClick(DialogInterface dialog, int which) {
                             Log.d(TAG, "SAVING TASK");
                             hbRecorder.stopScreenRecording();
-                            saveVideoToStorage();
+
 
                             Log.d(TAG, "SAVING TASK..recording .." + hbRecorder.getFilePath());
                         }
@@ -290,14 +299,25 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
 
         ref = storage.getReference().child(refPath);
         Uri file = Uri.fromFile(new File(path));
-        ref.putFile(file).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+
+
+        ref.putFile(file).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                // Handle unsuccessful uploads
+            }
+        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Log.d(TAG, path + "  UPLOADED");
-
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
+                // ...
+                TaskResult taskResult = new TaskResult(ParticipantLandingPage.participantName, projectID, ParticipantLandingPage.testID,  taskID,  path);
+                Intent intent = new Intent(ParticipantStartTask.this, ParticipantCompleteQuestionnaire.class);
+                intent.putExtra("taskResult", taskResult);
+                Log.d(TAG, "UPLOADEDD");
+                startActivity(intent);
 
             }
-
         });
 
 
@@ -328,9 +348,12 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
         Log.e("HBRecorder", "HBRecorderOnStart called");
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void HBRecorderOnComplete() {
+        saveVideoToStorage();
 
+        Log.d(TAG, hbRecorder.getFilePath());
     }
 
     @Override

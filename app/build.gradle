@@ -9,7 +9,7 @@ android {
     defaultConfig {
         applicationId "com.example.protosight"
         minSdkVersion 19
-        targetSdkVersion 30
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
@@ -58,6 +58,7 @@ dependencies {
     implementation 'com.sothree.slidinguppanel:library:3.4.0'
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
     implementation 'com.github.HBiSoft:HBRecorder:0.1.15'
+    implementation 'com.android.support:design:26.1.0'
 }
 apply plugin: 'com.google.gms.google-services'
 

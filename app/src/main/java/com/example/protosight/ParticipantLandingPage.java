@@ -25,6 +25,7 @@ public class ParticipantLandingPage extends AppCompatActivity {
     private FirebaseFirestore db;
     private String TAG = "ParticipantLandingPage";
     public static String participantName;
+    public static String testID;
 
 
     @Override
@@ -39,6 +40,7 @@ public class ParticipantLandingPage extends AppCompatActivity {
         EditText editTextName = findViewById(R.id.participant_name);
         participantName = editTextName.getText().toString();
         String code = editText.getText().toString();
+        testID = code;
         db.collection("tests").document(code).get()
                 .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                     @Override
