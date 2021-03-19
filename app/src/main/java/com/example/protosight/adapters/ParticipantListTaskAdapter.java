@@ -29,14 +29,13 @@ public class ParticipantListTaskAdapter extends RecyclerView.Adapter<Participant
     private Context context;
     private ArrayList<String> taskIds;
     private String TAG = "ParticipantListTaskAdapter";
-    private int[] status;
+    public static int[] status = {0,0,0};
+    public static int tempPos;
 
     public ParticipantListTaskAdapter(ArrayList<Map<String, Object>> tasks, Context context, ArrayList<String> taskIds) {
         this.tasks = tasks;
         this.context = context;
         this.taskIds = taskIds;
-        status = new int[tasks.size()];
-        status[0] = 1;
     }
 
     @NonNull
@@ -48,9 +47,10 @@ public class ParticipantListTaskAdapter extends RecyclerView.Adapter<Participant
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        String testName = (String) ((HashMap) tasks.get(position)).get("testName");
-//        String testID = (String) ((HashMap) tasks.get(position)).get("testID");
         holder.taskNum.setText("Task " + (position+1));
+        if (status[position] == 1){
+            holder.taskComplete.setVisibility(View.VISIBLE);
+        }
 
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +65,9 @@ public class ParticipantListTaskAdapter extends RecyclerView.Adapter<Participant
                     Intent intent = new Intent(context, ParticipantEnterSingleTask.class);
                     intent.putExtra("task", task);
                     intent.putExtra("taskID", taskIds.get(position));
+//                    intent.putExtra("pos", position);
+                    tempPos = position;
+
                     context.startActivity(intent);
 
 

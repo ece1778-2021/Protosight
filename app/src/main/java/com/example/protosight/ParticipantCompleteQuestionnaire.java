@@ -4,19 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.protosight.models.HotSpot;
+import com.example.protosight.adapters.ParticipantListTaskAdapter;
+
 import com.example.protosight.models.TaskResult;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -25,11 +25,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.Map;
 
 public class ParticipantCompleteQuestionnaire extends AppCompatActivity {
 
@@ -40,7 +35,7 @@ public class ParticipantCompleteQuestionnaire extends AppCompatActivity {
     private FirebaseFirestore db;
     private TextView t1,q1,t2,q2,t3,q3,t4,q4,t5,q5;
     private EditText e1,e2,e3,e4,e5;
-
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -132,6 +127,9 @@ public class ParticipantCompleteQuestionnaire extends AppCompatActivity {
         if (taskResult.getFifthQuestion() != null){
             taskResult.setFifthAnswer(e5.getText().toString());
         }
+        progressDialog = new ProgressDialog(ParticipantCompleteQuestionnaire.this);
+        progressDialog.setTitle("Saving the result...");
+        progressDialog.show();
 
         db.collection("taskResult")
                 .add(taskResult.toMap())
@@ -139,8 +137,21 @@ public class ParticipantCompleteQuestionnaire extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                        progressDialog.dismiss();
 
 
+                        ParticipantListTaskAdapter.status[ParticipantListTaskAdapter.tempPos] = 1;
+                        if (ParticipantListTaskAdapter.status[0] == 1 &&
+                                ParticipantListTaskAdapter.status[1] == 1 &&
+                                ParticipantListTaskAdapter.status[2] == 1){
+                            Log.d(TAG, "finished!!!");
+                            Intent intent = new Intent(ParticipantCompleteQuestionnaire.this, ParticipantCompleteTest.class);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(ParticipantCompleteQuestionnaire.this, ParticipantListTasksPage.class);
+                            intent.putExtra("testCode", taskResult.getTestCode());
+                            startActivity(intent);
+                        }
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

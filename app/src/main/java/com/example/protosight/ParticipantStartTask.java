@@ -67,6 +67,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
     private ImageView imageHolder;
     private long ONE_MEGABYTE = 1024 * 1024;
     private static int counter = 0;
+    private int flag = 0;
     ArrayList<HotSpot> hotSpots = new ArrayList<>();
     ClickableAreasImage clickableAreasImage;
 
@@ -74,7 +75,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
     private static final int SCREEN_RECORD_REQUEST_CODE = 1000;
 
     HBRecorder hbRecorder;
-
+    private HashMap<String, String> hashMap;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -83,8 +84,9 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participant_start_task);
         Intent intent = getIntent();
-        HashMap<String, String> hashMap = (HashMap<String, String>) intent.getSerializableExtra("task");
+        hashMap = (HashMap<String, String>) intent.getSerializableExtra("task");
         taskID = intent.getStringExtra("taskID");
+        counter = 0;
 
 
         hbRecorder = new HBRecorder(this, this);
@@ -155,12 +157,18 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Log.d(TAG, "herer...");
         int id = item.getItemId();
         if (id == R.id.stop_proto){
-            Intent intent = new Intent(ParticipantStartTask.this, Login.class);
-            startActivity(intent);
+            Log.d(TAG, "herer...");
+            flag = 1;
+            hbRecorder.stopScreenRecording();
+            Intent intent = new Intent(ParticipantStartTask.this, ParticipantListTasksPage.class);
+            intent.putExtra("testCode", hashMap.get("testID"));
+
         }
         return true;
     }
@@ -355,9 +363,13 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void HBRecorderOnComplete() {
-        saveVideoToStorage();
+        if (flag == 1){
+            Log.d(TAG, hbRecorder.getFilePath());
+        } else {
+            flag = 0;
+            saveVideoToStorage();
+        }
 
-        Log.d(TAG, hbRecorder.getFilePath());
     }
 
     @Override

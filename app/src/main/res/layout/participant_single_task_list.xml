@@ -29,6 +29,7 @@
         android:layout_gravity="center_vertical"
         android:id="@+id/task_complete"
         android:text="Complete!"
+        android:visibility="invisible"
         android:gravity="center"
         android:textSize="20sp"
         android:textStyle="bold"
