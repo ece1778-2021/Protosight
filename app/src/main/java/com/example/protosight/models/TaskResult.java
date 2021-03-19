@@ -13,6 +13,8 @@ public class TaskResult implements Parcelable {
 
     private String firstQuestion, secondQuestion, thirdQuestion, fourthQuestion, fifthQuestion;
 
+    private String firstAnswer, secondAnswer, thirdAnswer, fourthAnswer, fifthAnswer;
+
 
     public TaskResult(String tester, String projectCode, String testCode, String taskID, String videoPath) {
         this.projectCode = projectCode;
@@ -27,7 +29,53 @@ public class TaskResult implements Parcelable {
         this.fourthQuestion = "";
         this.fifthQuestion = "";
 
+        this.firstAnswer = "";
+        this.secondAnswer = "";
+        this.thirdAnswer = "";
+        this.fourthAnswer = "";
+        this.fifthAnswer = "";
 
+
+    }
+
+    public String getFirstAnswer() {
+        return firstAnswer;
+    }
+
+    public void setFirstAnswer(String firstAnswer) {
+        this.firstAnswer = firstAnswer;
+    }
+
+    public String getSecondAnswer() {
+        return secondAnswer;
+    }
+
+    public void setSecondAnswer(String secondAnswer) {
+        this.secondAnswer = secondAnswer;
+    }
+
+    public String getThirdAnswer() {
+        return thirdAnswer;
+    }
+
+    public void setThirdAnswer(String thirdAnswer) {
+        this.thirdAnswer = thirdAnswer;
+    }
+
+    public String getFourthAnswer() {
+        return fourthAnswer;
+    }
+
+    public void setFourthAnswer(String fourthAnswer) {
+        this.fourthAnswer = fourthAnswer;
+    }
+
+    public String getFifthAnswer() {
+        return fifthAnswer;
+    }
+
+    public void setFifthAnswer(String fifthAnswer) {
+        this.fifthAnswer = fifthAnswer;
     }
 
     protected TaskResult(Parcel in) {
@@ -131,11 +179,11 @@ public class TaskResult implements Parcelable {
         res.put("tester", getTester());
         res.put("taskID", getTaskID());
         res.put("videoPath", getVideoPath());
-        res.put("firstQuestion", getFirstQuestion());
-        res.put("secondQuestion", getSecondQuestion());
-        res.put("thirdQuestion", getThirdQuestion());
-        res.put("fourthQuestion", getFourthQuestion());
-        res.put("fifthQuestion", getFifthQuestion());
+        res.put("firstAnswer", getFirstAnswer());
+        res.put("secondAnswer", getSecondAnswer());
+        res.put("thirdAnswer", getThirdAnswer());
+        res.put("fourthAnswer", getFourthAnswer());
+        res.put("fifthAnswer", getFifthAnswer());
 
         return res;
 
@@ -163,25 +211,5 @@ public class TaskResult implements Parcelable {
 
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TaskResult that = (TaskResult) o;
-        return Objects.equals(projectCode, that.projectCode) &&
-                Objects.equals(testCode, that.testCode) &&
-                Objects.equals(taskID, that.taskID) &&
-                Objects.equals(videoPath, that.videoPath) &&
-                Objects.equals(tester, that.tester) &&
-                Objects.equals(firstQuestion, that.firstQuestion) &&
-                Objects.equals(secondQuestion, that.secondQuestion) &&
-                Objects.equals(thirdQuestion, that.thirdQuestion) &&
-                Objects.equals(fourthQuestion, that.fourthQuestion) &&
-                Objects.equals(fifthQuestion, that.fifthQuestion);
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(projectCode, testCode, taskID, videoPath, tester, firstQuestion, secondQuestion, thirdQuestion, fourthQuestion, fifthQuestion);
-    }
 }

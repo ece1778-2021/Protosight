@@ -6,6 +6,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -58,7 +60,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
     private String TAG = "ParticipantStartTask";
     private FirebaseFirestore db;
     private String taskID;
-
+    private ProgressDialog progressDialog;
     private FirebaseAuth mAuth;
     private FirebaseStorage storage;
     private String projectID;
@@ -263,6 +265,9 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             Log.d(TAG, "SAVING TASK");
+                            progressDialog = new ProgressDialog(ParticipantStartTask.this);
+                            progressDialog.setTitle("Comleting the task...");
+                            progressDialog.show();
                             hbRecorder.stopScreenRecording();
 
 
@@ -309,12 +314,11 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
-                // ...
-                TaskResult taskResult = new TaskResult(ParticipantLandingPage.participantName, projectID, ParticipantLandingPage.testID,  taskID,  path);
+
+                progressDialog.dismiss();
+                TaskResult taskResult = new TaskResult(ParticipantLandingPage.participantName, projectID, ParticipantLandingPage.testID,  taskID,  refPath);
                 Intent intent = new Intent(ParticipantStartTask.this, ParticipantCompleteQuestionnaire.class);
                 intent.putExtra("taskResult", taskResult);
-                Log.d(TAG, "UPLOADEDD");
                 startActivity(intent);
 
             }

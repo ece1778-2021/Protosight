@@ -59,6 +59,7 @@ dependencies {
     implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
     implementation 'com.github.HBiSoft:HBRecorder:0.1.15'
     implementation 'com.android.support:design:26.1.0'
+
 }
 apply plugin: 'com.google.gms.google-services'
 
