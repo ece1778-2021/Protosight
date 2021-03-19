@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ParticipantCompleteQuestionnaire">
+
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_primary"
+        android:fitsSystemWindows="true"
+        android:minHeight="?attr/actionBarSize"
+        app:title="Questionnaire"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/submit_questions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="15dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/round_bd"
+        android:onClick="submitQuestionnaireOnClick"
+        android:text="Submit"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+        <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:id="@+id/questions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/q1_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:text="Q1"
+                android:visibility="invisible"
+                android:textColor="#2CC3B4"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/q1_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_marginStart="10dp"
+                android:padding="5dp"
+                android:visibility="invisible"
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/q1_ans"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/black_border"
+                android:gravity="top"
+                android:paddingLeft="8dp"
+                android:visibility="invisible"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLength="150" />
+
+
+            <TextView
+                android:id="@+id/q2_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:text="Q2"
+                android:visibility="invisible"
+                android:textColor="#2CC3B4"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/q2_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:visibility="invisible"
+
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/q2_ans"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/black_border"
+                android:gravity="top"
+                android:paddingLeft="8dp"
+                android:visibility="invisible"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLength="150" />
+
+
+
+
+            <TextView
+                android:id="@+id/q3_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:text="Q3"
+                android:visibility="invisible"
+                android:textColor="#2CC3B4"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/q3_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:visibility="invisible"
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/q3_ans"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/black_border"
+                android:gravity="top"
+                android:paddingLeft="8dp"
+                android:visibility="invisible"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLength="150" />
+
+
+
+
+            <TextView
+                android:id="@+id/q4_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:text="Q4"
+                android:textColor="#2CC3B4"
+                android:visibility="invisible"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/q4_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:visibility="invisible"
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/q4_ans"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/black_border"
+                android:gravity="top"
+                android:paddingLeft="8dp"
+                android:visibility="invisible"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:maxLength="150" />
+
+
+            <TextView
+                android:id="@+id/q5_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:gravity="start"
+                android:text="Q5"
+                android:visibility="invisible"
+                android:textColor="#2CC3B4"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/q5_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:visibility="invisible"
+                android:textSize="18sp" />
+            <EditText
+                android:id="@+id/q5_ans"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/black_border"
+                android:gravity="top"
+                android:paddingLeft="8dp"
+                android:importantForAutofill="no"
+                android:inputType="textMultiLine"
+                android:visibility="invisible"
+                android:maxLength="150" />
+
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

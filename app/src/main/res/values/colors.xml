@@ -8,4 +8,15 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFF</color>
     <color name="blue_primary">#a2d9ff</color>
+
+    <color name="gradient_start_color">#5025FC</color>
+    <color name="gradient_end_color">#18a3fe</color>
+
+    <color name="tap_indicator_gray">#c0c0c0</color>
+    <color name="intro_title_color">#000000</color>
+    <color name="intro_desc_color">#656565</color>
+
+
+    <color name="question_title">#2CC3B4</color>
+
 </resources>
