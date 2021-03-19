@@ -96,12 +96,13 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
         hbRecorder.setOutputPath(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES).getAbsolutePath());
 
         toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         storage = FirebaseStorage.getInstance();
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword("test@gmail.com", "123123");
 
-        setSupportActionBar(toolbar);
+
         projectID = hashMap.get("projectCode");
 
         db.collection("hotspots")
@@ -168,6 +169,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
             hbRecorder.stopScreenRecording();
             Intent intent = new Intent(ParticipantStartTask.this, ParticipantListTasksPage.class);
             intent.putExtra("testCode", hashMap.get("testID"));
+            startActivity(intent);
 
         }
         return true;
