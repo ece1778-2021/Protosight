@@ -1,5 +1,6 @@
 package com.example.protosight;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -10,11 +11,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +29,7 @@ public class FillTheTask extends AppCompatActivity {
     private String lastActivity;
     private String testID;
     private String projectCode;
+    private String goalPageURL;
 
     private FirebaseFirestore db;
     private LinearLayout myLinearLayout;
@@ -34,12 +40,12 @@ public class FillTheTask extends AppCompatActivity {
     private TextView userTaskContentWordsCount;
     private TextView firstQuestionWordsCount;
     private int howManyQuestions;
-    private String[] questionTitleList = new String[]{
+    private final String[] questionTitleList = new String[]{
             "Second Question",
             "Third Question",
             "Fourth Question",
             "Fifth Question"};
-    private String[] allEditView = new String[]{
+    private final String[] allEditView = new String[]{
             "taskScenario",
             "userTask",
             "firstQuestion",
@@ -141,7 +147,6 @@ public class FillTheTask extends AppCompatActivity {
                             int linearLayoutIndex = 0;
                             while (mapIndex<taskMap.size()-2){
                                 if (linearLayoutIndex>=myLinearLayout.getChildCount()){
-                                    String h =(String) taskMap.get(allEditView[mapIndex]);
                                     addQuestionnaireQuestion((String) taskMap.get(allEditView[mapIndex]));
                                     mapIndex += 1;
                                 }
@@ -199,6 +204,7 @@ public class FillTheTask extends AppCompatActivity {
         }
         tasks.put("projectCode", projectCode);
         tasks.put("testID", testID);
+        tasks.put("goalPageURL", goalPageURL);
 
         if (lastActivity.equals("NameTheTest")) {
             db.collection("tasks").
@@ -209,6 +215,7 @@ public class FillTheTask extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             tasks.clear();
                             Log.d("Upload", "The upload of tasks is successful!");
+                            finish();
                         }
                     });
         } else {
@@ -220,8 +227,31 @@ public class FillTheTask extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             tasks.clear();
                             Log.d("Update", "The update of tasks is successful!");
+                            finish();
                         }
                     });
         }
+    }
+
+    public void addTheGoalPage(View view) {
+        Intent intent = new Intent(this, SelectGoalPage.class);
+        db.collection("prototypes").
+                whereEqualTo("projectCode", projectCode).
+                get().
+                addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        String prototypeName = (String)task.getResult().getDocuments().get(0).get("name");
+                        Log.d("pName",prototypeName);
+                        intent.putExtra("prototypeName", prototypeName);
+                        startActivityForResult(intent, 1);
+                    }
+                });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        goalPageURL = data.getStringExtra("URL");
     }
 }
