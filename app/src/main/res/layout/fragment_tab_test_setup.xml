@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -104,9 +103,11 @@
         android:layout_marginStart="16dp"
         android:text="@string/generate"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/test_code"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/test_code_instruction_2"
-        app:layout_constraintVertical_bias="0.219" />
+        app:layout_constraintVertical_bias="0.216" />
 
     <TextView
         android:id="@+id/test_code"
@@ -120,9 +121,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/generate_testcode"
         app:layout_constraintTop_toBottomOf="@+id/test_code_instruction_2"
-        app:layout_constraintVertical_bias="0.214" />
+        app:layout_constraintVertical_bias="0.212" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,22 +13,27 @@
         android:background="@color/blue_primary"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="Task" />
+        app:title="Task">
 
-    <Button
-        android:id="@+id/save_task"
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="296dp"
-        android:layout_marginBottom="680dp"
-        android:text="@string/save_task"
-        android:onClick="saveTheTask"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/test_code_instruction_2"
-        app:layout_constraintVertical_bias="0.219" />
+        <Button
+            android:id="@+id/save_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="10dp"
+            android:onClick="saveTheTask"
+            android:text="@string/save_task"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.892"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+    </androidx.appcompat.widget.Toolbar>
 
     <ScrollView
         android:id="@+id/task_creation_scrollView"
@@ -48,6 +52,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <Button
+                android:id="@+id/choose_goal_page"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_the_goal_page"
+                android:background="@drawable/mybutton"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:onClick="addTheGoalPage"/>
+
             <TextView
                 android:id="@+id/task_scenario_title"
                 android:layout_width="match_parent"
@@ -63,23 +78,23 @@
                 android:id="@+id/task_scenario_instruction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/state_your_scenario_clearly_and_concisely"
-                android:textSize="18sp"
-                android:layout_marginStart="10dp" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/task_scenario_content"
-                android:gravity="top"
                 android:layout_width="370dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/black_border"
+                android:gravity="top"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
-                android:maxLength="300"/>
+                android:maxLength="300" />
 
             <TextView
                 android:id="@+id/task_scenario_words_count"
@@ -88,8 +103,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="15dp"
                 android:gravity="end"
-                android:textSize="16sp"
-                android:text="@string/_0_300"/>
+                android:text="@string/_0_300"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/user_task_title"
@@ -106,23 +121,23 @@
                 android:id="@+id/user_task_instruction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:text="@string/state_your_task_clearly_and_concisely"
-                android:textSize="18sp"
-                android:layout_marginStart="10dp"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/user_task_content"
-                android:gravity="top"
                 android:layout_width="370dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/black_border"
+                android:gravity="top"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
-                android:maxLength="200"/>
+                android:maxLength="200" />
 
             <TextView
                 android:id="@+id/user_task_words_count"
@@ -131,8 +146,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="15dp"
                 android:gravity="end"
-                android:textSize="16sp"
-                android:text="@string/_0_200"/>
+                android:text="@string/_0_200"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/post_task_questionnaire_title"
@@ -158,12 +173,12 @@
                 android:id="@+id/post_task_questionnaire_warning_instruction"
                 android:layout_width="300dp"
                 android:layout_height="47dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="5dp"
                 android:background="#ACACAC"
                 android:gravity="start"
                 android:text="@string/for_each_question_users_will_only_have_100_characters_to_respond"
-                android:textSize="16sp"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="5dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/first_question_title"
@@ -185,7 +200,7 @@
                 android:gravity="top"
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
-                android:maxLength="150"/>
+                android:maxLength="150" />
 
             <TextView
                 android:id="@+id/first_question_words_count"

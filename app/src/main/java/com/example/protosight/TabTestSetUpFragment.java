@@ -29,7 +29,7 @@ public class TabTestSetUpFragment extends Fragment {
     private String lastActivity;
     private String projectCode;
     private FirebaseFirestore db;
-    private String[] taskTitle = new String[]{"task 1", "task 2", "task 3"};
+    private final String[] taskTitle = new String[]{"task 1", "task 2", "task 3"};
     private int taskTitleIndex;
     private LinearLayout linearLayout;
     private final int maxTaskNumber = 3;
@@ -210,7 +210,7 @@ public class TabTestSetUpFragment extends Fragment {
                 }
             });
             taskTitleIndex += 1;
-            linearLayout.addView(taskButtonView, linearLayout.getChildCount() - 1);
+            linearLayout.addView(taskButtonView, linearLayout.getChildCount());
         }
     }
 }
