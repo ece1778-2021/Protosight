@@ -36,6 +36,9 @@ public class ParticipantListTaskAdapter extends RecyclerView.Adapter<Participant
         this.tasks = tasks;
         this.context = context;
         this.taskIds = taskIds;
+        for (int i = tasks.size(); i < 3; i++){
+            status[i] = 1;
+        }
     }
 
     @NonNull
