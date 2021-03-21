@@ -58,6 +58,7 @@ public class FillTheTask extends AppCompatActivity {
 
 
 
+
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -134,7 +135,7 @@ public class FillTheTask extends AppCompatActivity {
                 }
             }
         });
-        if (lastActivity.equals("comingBack")){
+        if (!lastActivity.equals("NameTheTest")){
             String taskID = getIntent().getStringExtra("taskID");
             db.collection("tasks").
                     document(taskID).
@@ -145,8 +146,8 @@ public class FillTheTask extends AppCompatActivity {
                             Map taskMap = documentSnapshot.getData();
                             int mapIndex = 0;
                             int linearLayoutIndex = 0;
-                            while (mapIndex<taskMap.size()-2){
-                                if (linearLayoutIndex>=myLinearLayout.getChildCount()){
+                            while (mapIndex<taskMap.size()-3){
+                                if (linearLayoutIndex>=myLinearLayout.getChildCount()-2){
                                     addQuestionnaireQuestion((String) taskMap.get(allEditView[mapIndex]));
                                     mapIndex += 1;
                                 }
@@ -215,7 +216,7 @@ public class FillTheTask extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             tasks.clear();
                             Log.d("Upload", "The upload of tasks is successful!");
-                            finish();
+                            FillTheTask.this.finish();
                         }
                     });
         } else {
@@ -227,7 +228,7 @@ public class FillTheTask extends AppCompatActivity {
                         public void onSuccess(Void aVoid) {
                             tasks.clear();
                             Log.d("Update", "The update of tasks is successful!");
-                            finish();
+                            FillTheTask.this.finish();
                         }
                     });
         }

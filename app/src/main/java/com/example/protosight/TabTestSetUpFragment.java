@@ -210,7 +210,7 @@ public class TabTestSetUpFragment extends Fragment {
                 }
             });
             taskTitleIndex += 1;
-            linearLayout.addView(taskButtonView, linearLayout.getChildCount() - 1);
+            linearLayout.addView(taskButtonView, linearLayout.getChildCount());
         }
     }
 }
