@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.protosight.adapters.ParticipantListTaskAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ParticipantCompleteTest extends AppCompatActivity {
@@ -19,6 +20,9 @@ public class ParticipantCompleteTest extends AppCompatActivity {
 
 
     public void closeAppOnClick(View view){
+        ParticipantListTaskAdapter.status[0] = 0;
+        ParticipantListTaskAdapter.status[1] = 0;
+        ParticipantListTaskAdapter.status[2] = 0;
         mAuth.signOut();
         Intent intent = new Intent(ParticipantCompleteTest.this, Login.class);
         startActivity(intent);
