@@ -2,7 +2,6 @@ package com.example.protosight;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -83,6 +83,7 @@ public class TabTestSetUpFragment extends Fragment {
                     intent.putExtra("testID", testID);
                     intent.putExtra("lastActivity", lastActivity);
                     intent.putExtra("projectCode", projectCode);
+                    intent.putExtra("taskCode", 1);
                     startActivity(intent);
                 }
             });
@@ -103,6 +104,7 @@ public class TabTestSetUpFragment extends Fragment {
             ArrayList taskData = new ArrayList();
             db.collection("tasks").
                     whereEqualTo("testID", testID).
+                    orderBy("taskCode", Query.Direction.ASCENDING).
                     get().
                     addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
@@ -139,6 +141,7 @@ public class TabTestSetUpFragment extends Fragment {
             ArrayList taskData = new ArrayList();
             db.collection("tasks").
                     whereEqualTo("testID", testID).
+                    orderBy("taskCode", Query.Direction.ASCENDING).
                     get().
                     addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -151,6 +154,7 @@ public class TabTestSetUpFragment extends Fragment {
                             for (int i = 0; i < taskData.size(); i++) {
                                 addTaskComingBackForEditing((Map) taskData.get(i));
                             }
+                            //The following code is for the Adding task button
                             View add_task_buttom = getLayoutInflater().inflate(R.layout.add_task_item, null);
                             Button addTaskButton = add_task_buttom.findViewById(R.id.taskCreation_add_task);
                             addTaskButton.setOnClickListener(new View.OnClickListener() {
@@ -183,8 +187,8 @@ public class TabTestSetUpFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), FillTheTask.class);
                     intent.putExtra("testID", testID);
-                    intent.putExtra("lastActivity", "NameTheTest");
                     intent.putExtra("projectCode", projectCode);
+                    intent.putExtra("taskCode", taskTitleIndex);
                     startActivity(intent);
                 }
             });
@@ -203,8 +207,8 @@ public class TabTestSetUpFragment extends Fragment {
                 public void onClick(View v) {
                     Intent intent = new Intent(getActivity(), FillTheTask.class);
                     intent.putExtra("testID", testID);
-                    intent.putExtra("lastActivity", lastActivity);
-                    intent.putExtra("projectCode", taskMap.get("projectCode"));
+                    intent.putExtra("projectCode", projectCode);
+                    intent.putExtra("taskCode", taskTitleIndex);
                     intent.putExtra("taskID", taskMap.get("taskID"));
                     startActivity(intent);
                 }

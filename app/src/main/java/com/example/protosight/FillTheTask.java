@@ -23,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.sql.Timestamp;
 
 public class FillTheTask extends AppCompatActivity {
 
@@ -30,6 +31,8 @@ public class FillTheTask extends AppCompatActivity {
     private String testID;
     private String projectCode;
     private String goalPageURL;
+    private String myId;
+    private int taskCode;
 
     private FirebaseFirestore db;
     private LinearLayout myLinearLayout;
@@ -53,8 +56,8 @@ public class FillTheTask extends AppCompatActivity {
             "thirdQuestion",
             "fourthQuestion",
             "fifthQuestion"};
-    private HashMap<String, String> tasks = new HashMap<String, String>();
-    private String myId;
+    private HashMap<String, Object> tasks = new HashMap();
+
 
 
 
@@ -64,9 +67,15 @@ public class FillTheTask extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fill_in_task);
 
-        lastActivity = getIntent().getStringExtra("lastActivity");
         testID = getIntent().getStringExtra("testID");
         projectCode = getIntent().getStringExtra("projectCode");
+        taskCode = getIntent().getIntExtra("taskCode", 0);
+        if (getIntent().hasExtra("taskID")) {
+            lastActivity = "comingBack!";
+        } else {
+            lastActivity = "NameTheTest";
+        }
+
 
         db = FirebaseFirestore.getInstance();
 
@@ -146,7 +155,7 @@ public class FillTheTask extends AppCompatActivity {
                             Map taskMap = documentSnapshot.getData();
                             int mapIndex = 0;
                             int linearLayoutIndex = 0;
-                            while (mapIndex<taskMap.size()-3){
+                            while (mapIndex<taskMap.size()-4){
                                 if (linearLayoutIndex>=myLinearLayout.getChildCount()-2){
                                     addQuestionnaireQuestion((String) taskMap.get(allEditView[mapIndex]));
                                     mapIndex += 1;
@@ -206,6 +215,7 @@ public class FillTheTask extends AppCompatActivity {
         tasks.put("projectCode", projectCode);
         tasks.put("testID", testID);
         tasks.put("goalPageURL", goalPageURL);
+        tasks.put("taskCode", taskCode);
 
         if (lastActivity.equals("NameTheTest")) {
             db.collection("tasks").
@@ -215,6 +225,8 @@ public class FillTheTask extends AppCompatActivity {
                         @Override
                         public void onSuccess(Void aVoid) {
                             tasks.clear();
+                            Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+                            tasks.put("timeStamp", timestamp);
                             Log.d("Upload", "The upload of tasks is successful!");
                             FillTheTask.this.finish();
                         }
@@ -243,7 +255,6 @@ public class FillTheTask extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         String prototypeName = (String)task.getResult().getDocuments().get(0).get("name");
-                        Log.d("pName",prototypeName);
                         intent.putExtra("prototypeName", prototypeName);
                         startActivityForResult(intent, 1);
                     }
@@ -253,6 +264,8 @@ public class FillTheTask extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        goalPageURL = data.getStringExtra("URL");
+        if (resultCode!= RESULT_CANCELED && data!=null) {
+            goalPageURL = data.getStringExtra("URL");
+        }
     }
 }

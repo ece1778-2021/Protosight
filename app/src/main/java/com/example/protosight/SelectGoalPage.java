@@ -3,17 +3,17 @@ package com.example.protosight;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.protosight.adapters.CreateProjectImageAdapter;
 import com.example.protosight.adapters.SelectGoalPageAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.ListResult;
@@ -38,7 +38,6 @@ public class SelectGoalPage extends AppCompatActivity {
         myAuth = FirebaseAuth.getInstance();
 
         String userID = myAuth.getCurrentUser().getUid();
-        Log.d("uid", userID);
         FirebaseStorage.getInstance().
                 getReference().
                 child("prototypes").
@@ -72,4 +71,5 @@ public class SelectGoalPage extends AppCompatActivity {
         setResult(1, intent);
         finish();
     }
+
 }
