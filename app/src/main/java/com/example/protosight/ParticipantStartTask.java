@@ -37,6 +37,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -52,6 +53,7 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import uk.co.senab.photoview.PhotoViewAttacher;
 
@@ -76,6 +78,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
 
     HBRecorder hbRecorder;
     private HashMap<String, String> hashMap;
+    private String goalScreenPath;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -87,7 +90,30 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("task");
         taskID = intent.getStringExtra("taskID");
         counter = 0;
+        Log.d(TAG, taskID);
+        Log.d(TAG, "sdfasdfa....");
+        db = FirebaseFirestore.getInstance();
 
+        db.collection("tasks")
+                .document(taskID)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            DocumentSnapshot document = task.getResult();
+                            if (document.exists()) {
+
+                                goalScreenPath = (String) document.getData().get("goalPageURL");
+                                Log.d(TAG, goalScreenPath);
+                            } else {
+                                Log.d(TAG, "No such document");
+                            }
+                        } else {
+                            Log.d(TAG, "get failed with ", task.getException());
+                        }
+                    }
+                });
 
         hbRecorder = new HBRecorder(this, this);
 
@@ -98,7 +124,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         storage = FirebaseStorage.getInstance();
-        db = FirebaseFirestore.getInstance();
+
         mAuth = FirebaseAuth.getInstance();
         mAuth.signInWithEmailAndPassword("test@gmail.com", "123123");
 
@@ -186,11 +212,47 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
 
 
         mStorageRef.child(imageRef).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
                 imageHolder.setImageBitmap(bm);
                 addClickables(first);
+                Log.d(TAG, goalScreenPath);
+                Log.d(TAG, imageRef);
+                if (goalScreenPath.contains(imageRef)){
+                    try {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ParticipantStartTask.this);
+                        builder.setMessage("Congratulations ! You have reached the goal screen!\n")
+                                .setCancelable(false)
+                                .setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        progressDialog = new ProgressDialog(ParticipantStartTask.this);
+                                        progressDialog.setTitle("Saving the result...");
+                                        progressDialog.show();
+                                        hbRecorder.stopScreenRecording();
+
+
+                                        Log.d(TAG, "SAVING TASK..recording .." + hbRecorder.getFilePath());
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog dialog = builder.create();
+                        TimeUnit.SECONDS.sleep(1);
+                        dialog.show();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
             }
 
@@ -236,10 +298,48 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
         imageHolder = findViewById(R.id.task_image);
         String imageRef = hotSpot.getLinkImage();
         mStorageRef.child(imageRef).getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
             @Override
             public void onSuccess(byte[] bytes) {
                 Bitmap bm = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+
                 imageHolder.setImageBitmap(bm);
+                if (goalScreenPath.contains(imageRef)){
+                    Log.d(TAG, "goal!!!!");
+                    try {
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ParticipantStartTask.this);
+                        builder.setMessage("Congratulations ! You have reached the goal screen!\n")
+                                .setCancelable(false)
+                                .setPositiveButton("Next", new DialogInterface.OnClickListener() {
+                                    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+
+                                        progressDialog = new ProgressDialog(ParticipantStartTask.this);
+                                        progressDialog.setTitle("Saving the result...");
+                                        progressDialog.show();
+                                        hbRecorder.stopScreenRecording();
+
+
+                                        Log.d(TAG, "SAVING TASK..recording .." + hbRecorder.getFilePath());
+                                    }
+                                })
+                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+                        AlertDialog dialog = builder.create();
+                        TimeUnit.SECONDS.sleep(1);
+                        dialog.show();
+
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
 
             }
 
@@ -256,7 +356,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
         for (HotSpot s : hotSpot){
             clickableAreas.add(new ClickableArea(s.getX(), s.getY(), s.getW(), s.getH(), s));
         }
-        Log.d(TAG, clickableAreas.toString());
+
 
         clickableAreasImage.setClickableAreas(clickableAreas);
     }
@@ -359,7 +459,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
 
     @Override
     public void HBRecorderOnStart() {
-        Log.e("HBRecorder", "HBRecorderOnStart called");
+        Log.d("HBRecorder", "HBRecorderOnStart called");
     }
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
