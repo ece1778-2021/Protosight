@@ -14,6 +14,9 @@ import android.content.Intent;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
@@ -22,6 +25,9 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -86,6 +92,11 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_participant_start_task);
+//        setContentView(new DrawingView(this));
+
+
+
+
         Intent intent = getIntent();
         hashMap = (HashMap<String, String>) intent.getSerializableExtra("task");
         taskID = intent.getStringExtra("taskID");
