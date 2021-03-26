@@ -31,6 +31,7 @@ import com.example.protosight.imageClickableArea.ClickableAreasImage;
 import com.example.protosight.imageClickableArea.OnClickableAreaClickedListener;
 import com.example.protosight.models.HotSpot;
 import com.example.protosight.models.TaskResult;
+import com.example.protosight.views.TapShadowView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -79,6 +80,7 @@ public class ParticipantStartTask extends AppCompatActivity implements OnClickab
     HBRecorder hbRecorder;
     private HashMap<String, String> hashMap;
     private String goalScreenPath;
+    private TapShadowView tapShadowView;
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
