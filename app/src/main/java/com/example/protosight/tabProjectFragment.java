@@ -82,7 +82,7 @@ public class tabProjectFragment extends Fragment {
                     }
                     rv.setLayoutManager(new LinearLayoutManager(view.getContext()));
                     rv.addItemDecoration(new DividerItemDecoration(view.getContext(), LinearLayoutManager.VERTICAL));
-                    ListAllProjectAdapter ia = new ListAllProjectAdapter(projectNames, view.getContext(), projectIDs, firstImages);
+                    ListAllProjectAdapter ia = new ListAllProjectAdapter(projectNames, view.getContext(), projectIDs, firstImages, rv);
                     rv.setAdapter(ia);
                 } else {
                     Log.d(TAG, "Error getting documents: ", task.getException());

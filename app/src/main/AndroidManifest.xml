@@ -14,7 +14,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Protosight">
-        <activity android:name=".EditPrototype"></activity>
         <activity android:name=".ParticipantCompleteTest" />
         <activity android:name=".ParticipantCompleteQuestionnaire" />
         <activity android:name=".ParticipantStartTask" />
