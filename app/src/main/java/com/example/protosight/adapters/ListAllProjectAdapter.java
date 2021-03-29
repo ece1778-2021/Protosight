@@ -18,6 +18,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.chauthai.swipereveallayout.SwipeRevealLayout;
+import com.example.protosight.EditPrototype;
 import com.example.protosight.PlayPrototype;
 import com.example.protosight.R;
 
@@ -60,6 +61,15 @@ public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAd
                 context.startActivity(intent);
             }
         });
+
+        holder.editPrototype.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "Play project : " + projects.get(position));
+                // TODO: perform deletion
+            }
+        });
+
     }
 
     @Override
@@ -72,6 +82,7 @@ public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAd
         protected SwipeRevealLayout currentProjectNameCardView;
         protected TextView currentProjectName;
         protected TextView playPrototype;
+        protected TextView editPrototype;
         private String TAG = "ProjectViewHolder";
 
 
@@ -80,14 +91,8 @@ public class ListAllProjectAdapter extends RecyclerView.Adapter<ListAllProjectAd
             currentProjectName = itemView.findViewById(R.id.single_project_name);
             currentProjectNameCardView = itemView.findViewById(R.id.single_project);
             playPrototype = itemView.findViewById(R.id.play_prototype);
-//            linearLayout = itemView.findViewById(R.id.add_project);
+            editPrototype = itemView.findViewById(R.id.delete_prototype);
 
-//            playPrototype.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
 
         }
     }
