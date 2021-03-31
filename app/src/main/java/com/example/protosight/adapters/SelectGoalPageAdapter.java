@@ -66,8 +66,8 @@ public class SelectGoalPageAdapter extends RecyclerView.Adapter<SelectGoalPageAd
                         holder.currentImage.setImageBitmap(bitmap);
                     }
                 });
-        holder.currentImage.setOnClickListener(new View.OnClickListener(){
 
+        holder.currentImage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 lastPage.callback((String) images.get(position));

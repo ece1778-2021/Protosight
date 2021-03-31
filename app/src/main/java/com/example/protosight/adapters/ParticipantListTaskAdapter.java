@@ -50,7 +50,7 @@ public class ParticipantListTaskAdapter extends RecyclerView.Adapter<Participant
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.taskNum.setText("Task " + (position+1));
+        holder.taskNum.setText("TheTask " + (position+1));
         if (status[position] == 1){
             holder.taskComplete.setVisibility(View.VISIBLE);
         }

@@ -5,9 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.protosight.tabProjectFragment;
-import com.example.protosight.tabTaskFragment;
 import com.example.protosight.TabTestSetUpFragment;
+import com.example.protosight.TabTestResultsFragment;
 
 public class TestViewPagerAdapter extends FragmentPagerAdapter {
 
@@ -35,7 +34,7 @@ public class TestViewPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new TabTestSetUpFragment(testID, lastActivity, projectCode);
             case 1:
-                return new tabTaskFragment();
+                return new TabTestResultsFragment(testID);
             default:
                 return null;
         }
