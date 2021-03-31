@@ -35,7 +35,7 @@
         <activity android:name=".CreateTask"/>
         <activity android:name=".FillTheTask"/>
         <activity android:name=".SelectGoalPage"/>
-        <activity android:name=".PersonalTaskView"/>
+
 
         <activity
             android:name=".Login"
