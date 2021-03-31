@@ -13,8 +13,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="284dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginTop="18dp"
         android:background="@drawable/round_border"
         android:drawableRight="@drawable/ic_person"
         android:hint="Username"
@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <EditText
         android:id="@+id/email"
@@ -90,34 +90,37 @@
     <ImageView
         android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="@color/blue_primary"
-        android:src="@drawable/ic_logo"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_logo_small"
+        android:fitsSystemWindows="true"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="@drawable/ic_wave"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <Button
+    <TextView
         android:id="@+id/login"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
+
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:textColor="@color/white"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/round_bd"
+
         android:onClick="registerOnClick"
         android:text="@string/action_register"
-        app:backgroundTint="@color/blue_primary"
+        android:textColor="#5025FC"
+        android:gravity="center"
+        android:textSize="22sp"
+
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

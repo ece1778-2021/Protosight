@@ -22,6 +22,15 @@
             android:gravity="center"
             android:text="Play"
             android:textColor="#fff"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:id="@+id/delete_prototype"
+            android:background="@color/tap_indicator_gray"
+            android:gravity="center"
+            android:text="Delete"
+            android:textColor="#fff"/>
         
     </LinearLayout>
 

@@ -37,7 +37,7 @@ public class CreatorLandingPage extends AppCompatActivity implements NavigationV
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private String TAG = "CreatorLandingPage";
-    private TextView username, homeGreeting;
+    private TextView  homeGreeting;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private ViewPager viewPager;
@@ -52,8 +52,7 @@ public class CreatorLandingPage extends AppCompatActivity implements NavigationV
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         toolbar = findViewById(R.id.toolbar);
-        View headerView = navigationView.getHeaderView(0);
-        username = headerView.findViewById(R.id.login_user_name);
+
         homeGreeting = findViewById(R.id.home_greeting);
         tabLayout = findViewById(R.id.project_task_controller);
         viewPager = findViewById(R.id.home_viewPager);
@@ -90,7 +89,6 @@ public class CreatorLandingPage extends AppCompatActivity implements NavigationV
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         String name = (String) documentSnapshot.get("username");
-                        username.setText(name);
                         String homeDisplayName = "Hello, " + name;
                         homeGreeting.setText(homeDisplayName);
                     }
