@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="350dp"
+    android:layout_height="300dp"
+    android:layout_margin="20dp"
+    android:layout_gravity="center_horizontal"
+    cardview:cardCornerRadius="10dp"
+    cardview:cardElevation="10dp">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#636262"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/personal_task_view_taskTitle"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@color/white"
+            android:gravity="start|center_vertical"
+            android:paddingStart="30dp"
+            android:paddingEnd="20dp"
+            android:text="@string/task"
+            android:textSize="20sp" />
+
+        <VideoView
+            android:id="@+id/personal_task_view_videoView"
+            android:layout_width="fill_parent"
+            android:layout_height="200dp"
+            android:layout_gravity="center" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/personal_task_view_toolBar"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@color/white">
+
+            <TextView
+                android:id="@+id/questionnaire_response_link"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="10dp"
+                android:gravity="center"
+                android:text="@string/questionnaire_response"
+                android:textColor="#2B78B6"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/baseline_arrow_forward_ios_20" />
+        </androidx.appcompat.widget.Toolbar>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
