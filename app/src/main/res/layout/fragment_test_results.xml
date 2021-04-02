@@ -1,20 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.appcompat.widget.LinearLayoutCompat
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-<<<<<<< HEAD
+
     android:layout_height="match_parent"
     android:layout_gravity="center_horizontal">
-=======
-    android:layout_height="match_parent">
->>>>>>> 903529139206e8b7e92f6e06571bb7b6b49609f8
-
-    <androidx.recyclerview.widget.RecyclerView
+<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/testResults_recyclerView"
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal" />
-=======
-        android:layout_height="match_parent" />
->>>>>>> 903529139206e8b7e92f6e06571bb7b6b49609f8
+        android:layout_gravity="center_horizontal"/>
 </androidx.appcompat.widget.LinearLayoutCompat>
