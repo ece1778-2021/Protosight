@@ -9,7 +9,11 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+<<<<<<< HEAD
+import androidx.recyclerview.widget.LinearLayoutManager;
+=======
 import androidx.recyclerview.widget.GridLayoutManager;
+>>>>>>> 903529139206e8b7e92f6e06571bb7b6b49609f8
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.protosight.adapters.TabTestResultsAdapter;
@@ -110,7 +114,11 @@ public class TabTestResultsFragment extends Fragment {
                         //Create an ArrayList of keys of map
                         ArrayList<String> testerNames = new ArrayList<String>(participants.keySet());
                         TabTestResultsAdapter adapter = new TabTestResultsAdapter(TabTestResultsFragment.this, testerNames);
+<<<<<<< HEAD
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+=======
                         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 1));
+>>>>>>> 903529139206e8b7e92f6e06571bb7b6b49609f8
                         recyclerView.setAdapter(adapter);
                     }
                 });
@@ -119,6 +127,10 @@ public class TabTestResultsFragment extends Fragment {
     public void callBack(String testerName){
         String[] taskName = new String[]{"taskOne", "taskTwo", "taskThree"};
         Intent intent = new Intent(getContext(), PersonalTaskView.class);
+<<<<<<< HEAD
+        intent.putExtra("testerName", testerName);
+=======
+>>>>>>> 903529139206e8b7e92f6e06571bb7b6b49609f8
         for (int i = 0; i<participants.get(testerName).size(); i++){
             intent.putExtra(taskName[i], participants.get(testerName).get(i));
         }
