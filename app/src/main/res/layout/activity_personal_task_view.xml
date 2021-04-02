@@ -23,17 +23,17 @@
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/personal_task_view_linearlayout"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:layout_height="match_parent">
 
-        </ScrollView>
+            <LinearLayout
+                android:id="@+id/personal_task_view_linearlayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            </ScrollView>
     </LinearLayout>
 
     <com.google.android.material.navigation.NavigationView

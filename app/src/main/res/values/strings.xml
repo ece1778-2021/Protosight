@@ -80,5 +80,7 @@
     <string name="permission_text">permission_text</string>
     <string name="task">Task</string>
     <string name="questionnaire_response">QUESTIONNAIRE RESPONSE</string>
+    <string name="questionnaire_responsee">Questionnaire Response</string>
+    <string name="q1">Q1</string>
 
 </resources>

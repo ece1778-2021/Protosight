@@ -13,19 +13,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/black">
+        android:background="#636262"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/personal_task_view_taskTitle"
             android:layout_width="match_parent"
             android:layout_height="55dp"
+            android:background="@color/white"
             android:gravity="start|center_vertical"
-            android:paddingStart="20dp"
+            android:paddingStart="30dp"
             android:paddingEnd="20dp"
             android:text="@string/task"
-            android:textSize="20sp"
-            android:background="@color/white"/>
+            android:textSize="20sp" />
 
         <VideoView
             android:id="@+id/personal_task_view_videoView"
@@ -49,12 +49,13 @@
                 android:textColor="#2B78B6"
                 android:textSize="16sp"
                 android:textStyle="bold" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/baseline_arrow_forward_ios_20"
                 android:layout_marginStart="70dp"
-                android:layout_marginEnd="5dp"/>
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/baseline_arrow_forward_ios_20" />
         </androidx.appcompat.widget.Toolbar>
 
 
