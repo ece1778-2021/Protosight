@@ -61,7 +61,6 @@ public class QuestionnaireResponsePresent extends AppCompatActivity implements N
     }
 
     private void addResponse(String[] QA, int index){
-        Log.d("liu", ""+index);
         View view = getLayoutInflater().inflate(R.layout.questionnaire_response_item, myLinearLayout, false);
         TextView questionTitle = view.findViewById(R.id.questionnaire_response_question_title);
         TextView questionContent = view.findViewById(R.id.questionnaire_response_question);
