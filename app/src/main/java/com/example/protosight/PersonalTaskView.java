@@ -1,6 +1,5 @@
 package com.example.protosight;
 
-<<<<<<< HEAD
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 
 
-public class PersonalTaskView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class PersonalTaskView extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private LinearLayout myLinearLayout;
     private DrawerLayout myDrawerLayout;
@@ -38,7 +37,7 @@ public class PersonalTaskView extends AppCompatActivity implements NavigationVie
 
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_personal_task_view);
 
@@ -59,14 +58,14 @@ public class PersonalTaskView extends AppCompatActivity implements NavigationVie
         toggle.syncState();
 
         int index = 0;
-        while (getIntent().hasExtra(taskName[index])){
+        while (getIntent().hasExtra(taskName[index])) {
             TheTask task = getIntent().getParcelableExtra(taskName[index]);
             addTaskView(task, index);
             index += 1;
         }
     }
 
-    private void addTaskView(TheTask task, int titleIndex){
+    private void addTaskView(TheTask task, int titleIndex) {
         View view = getLayoutInflater().inflate(R.layout.personal_task_view_item, myLinearLayout, false);
 
         TextView myTextView = view.findViewById(R.id.personal_task_view_taskTitle);
@@ -93,15 +92,15 @@ public class PersonalTaskView extends AppCompatActivity implements NavigationVie
             }
         });
         db.getReference().child(path).
-            getDownloadUrl().addOnCompleteListener(
-            new OnCompleteListener<Uri>() {
-                @Override
-                public void onComplete(@NonNull Task<Uri> task) {
-                    myVideoView.setVideoURI(task.getResult());
-                    myVideoView.seekTo(1);
-                    myLinearLayout.addView(view);
+                getDownloadUrl().addOnCompleteListener(
+                new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        myVideoView.setVideoURI(task.getResult());
+                        myVideoView.seekTo(1);
+                        myLinearLayout.addView(view);
+                    }
                 }
-            }
         );
     }
 
@@ -109,27 +108,22 @@ public class PersonalTaskView extends AppCompatActivity implements NavigationVie
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.nav_home){
+        if (id == R.id.nav_home) {
             Intent intent = new Intent(this, CreatorLandingPage.class);
             startActivity(intent);
-        } else if (id == R.id.nav_projects){
+        } else if (id == R.id.nav_projects) {
 
             Intent intent = new Intent(this, CreatorLandingPage.class);
             startActivity(intent);
-        } else if (id == R.id.nav_tests){
+        } else if (id == R.id.nav_tests) {
 
             Intent intent = new Intent(this, CreatorLandingPage.class);
             startActivity(intent);
-        } else if (id == R.id.logout){
+        } else if (id == R.id.logout) {
             mAuth.signOut();
             Intent intent = new Intent(this, Login.class);
             startActivity(intent);
         }
         return false;
     }
-=======
-import androidx.appcompat.app.AppCompatActivity;
-
-public class PersonalTaskView extends AppCompatActivity {
->>>>>>> 903529139206e8b7e92f6e06571bb7b6b49609f8
 }
