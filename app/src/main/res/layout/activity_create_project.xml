@@ -30,7 +30,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/upload_images_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
+        android:layout_height="600dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
