@@ -1,5 +1,8 @@
 package com.example.protosight;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -22,6 +26,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 
 public class TabTestSetUpFragment extends Fragment {
 
@@ -34,6 +40,7 @@ public class TabTestSetUpFragment extends Fragment {
     private LinearLayout linearLayout;
     private final int maxTaskNumber = 3;
     private boolean ifFistTimeEnter;
+    private ClipData clipData;
 
 
     public TabTestSetUpFragment(String testID, String lastActivity, String projectCode){
@@ -68,7 +75,20 @@ public class TabTestSetUpFragment extends Fragment {
                         update("whetherAllowChange", "1");
             }
         });
-
+        TextView testCodeView = view.findViewById(R.id.test_code);
+        ClipboardManager clipboardManager = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+        Button copyTestCodeButton = view.findViewById(R.id.copy_testCode_button);
+        copyTestCodeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String testCode = testCodeView.getText().toString();
+                if (!testCode.equals("")) {
+                    ClipData clipData = ClipData.newPlainText("text", testCode);
+                    clipboardManager.setPrimaryClip(clipData);
+                    Toast.makeText(getContext(), "Share code has been successfully copied.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         //This is the case the user enters this page for the first time
         if (lastActivity.equals("NameTheTest")) {
